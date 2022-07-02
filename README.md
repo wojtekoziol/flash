@@ -11,4 +11,6 @@
 
 Beautiful flashcards app to help with learning.
 
+<!-- Preview -->
+
 Design inspired by [Spikey Sanju](https://dribbble.com/shots/15435442-BrainScape-Flashcards-Maker-App).
