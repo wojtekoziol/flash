@@ -25,7 +25,10 @@ class NavigationView extends HookWidget {
               );
             },
           ),
-          BottomNavbar(indexNotifier: indexNotifier),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BottomNavbar(indexNotifier: indexNotifier),
+          ),
         ],
       ),
     );
