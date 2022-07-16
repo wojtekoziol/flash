@@ -17,6 +17,7 @@ class BottomNavbar extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: kPaddingM),
         child: Scaffold(
+          backgroundColor: Colors.transparent,
           floatingActionButton: const _FloatingActionButton(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
