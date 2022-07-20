@@ -1,5 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/home/widgets/app_logo.dart';
+import 'package:flash/home/widgets/home_widget.dart';
 import 'package:flash/home/widgets/profile_picture.dart';
 import 'package:flutter/material.dart';
 
@@ -8,28 +9,60 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scaffoldColor = Theme.of(context).scaffoldBackgroundColor;
+    final theme = Theme.of(context);
+    final scaffoldColor = theme.scaffoldBackgroundColor;
 
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(kPaddingL, kPaddingS, kPaddingL, 0),
         child: Stack(
           children: [
-            // ListView
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            ListView(
+              padding: const EdgeInsets.only(top: kPaddingM * 10),
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    AppLogo(),
-                    ProfilePicture(),
+                  children: [
+                    Expanded(
+                      child: HomeWidget(
+                        color: theme.colorScheme.secondary,
+                        value: 34,
+                        title: 'Studied cards',
+                      ),
+                    ),
+                    const SizedBox(width: kPaddingM),
+                    Expanded(
+                      child: HomeWidget(
+                        color: theme.floatingActionButtonTheme.backgroundColor!,
+                        value: 18,
+                        title: 'Decks created',
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: kPaddingM),
-                Text(
-                  'Dashboard',
-                  style: Theme.of(context).textTheme.headline4,
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ColoredBox(
+                  color: theme.scaffoldBackgroundColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          AppLogo(),
+                          ProfilePicture(),
+                        ],
+                      ),
+                      const SizedBox(height: kPaddingM),
+                      Text(
+                        'Dashboard',
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
                   height: kPaddingL,
