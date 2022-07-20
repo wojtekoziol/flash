@@ -25,9 +25,11 @@ final kLightTheme = ThemeData(
       fontWeight: FontWeight.w500,
     ),
     headline5: TextStyle(fontWeight: FontWeight.w500),
+    subtitle1: TextStyle(fontWeight: FontWeight.bold),
   ),
   colorScheme: const ColorScheme.light().copyWith(
     primary: kBlue,
     secondary: kPurple,
   ),
+  dividerColor: kGrey,
 );

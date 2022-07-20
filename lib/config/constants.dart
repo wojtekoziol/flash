@@ -10,7 +10,7 @@ const kPaddingXL = 48.0;
 const kOrange = Color(0xffffa93a);
 const kBlue = Color(0xff0e6bf7);
 const kPurple = Color(0xff7b68db);
-const kGrey = Color(0xfff9f9f9);
+const kGrey = Color.fromARGB(255, 235, 235, 235);
 const kLightBlue = Color(0xffc3d2ff);
 
 // Animations
