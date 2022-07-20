@@ -1,5 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/home/widgets/app_logo.dart';
+import 'package:flash/home/widgets/card_deck.dart';
 import 'package:flash/home/widgets/home_widget.dart';
 import 'package:flash/home/widgets/profile_picture.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final scaffoldColor = theme.scaffoldBackgroundColor;
 
     return SafeArea(
       child: Padding(
@@ -39,46 +39,74 @@ class HomeView extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ColoredBox(
-                  color: theme.scaffoldBackgroundColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          AppLogo(),
-                          ProfilePicture(),
-                        ],
-                      ),
-                      const SizedBox(height: kPaddingM),
-                      Text(
-                        'Dashboard',
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ],
-                  ),
+                const SizedBox(height: kPaddingL),
+                Text(
+                  'Classes',
+                  style: theme.textTheme.subtitle1,
                 ),
-                Container(
-                  height: kPaddingL,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [scaffoldColor, scaffoldColor.withOpacity(0.1)],
-                    ),
-                  ),
+                const SizedBox(height: kPaddingL),
+                const CardDeck(
+                  category: 'Programming',
+                  title: 'Fundamentals on Computer Science',
+                  user: 'Cody Fisher',
+                ),
+                const SizedBox(height: kPaddingL),
+                const CardDeck(
+                  category: 'Knowledge',
+                  title: 'Knowledge about Environmental & Science',
+                  user: 'Jacob Jones',
                 ),
               ],
             ),
+            const _AppBar(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AppBar extends StatelessWidget {
+  const _AppBar();
+
+  @override
+  Widget build(BuildContext context) {
+    final scaffoldColor = Theme.of(context).scaffoldBackgroundColor;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ColoredBox(
+          color: scaffoldColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  AppLogo(),
+                  ProfilePicture(),
+                ],
+              ),
+              const SizedBox(height: kPaddingM),
+              Text(
+                'Dashboard',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: kPaddingL,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [scaffoldColor, scaffoldColor.withOpacity(0.1)],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
