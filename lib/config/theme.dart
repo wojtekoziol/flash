@@ -1,6 +1,5 @@
 import 'package:flash/config/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 final kLightTheme = ThemeData(
   fontFamily: 'Poppins',
@@ -10,6 +9,7 @@ final kLightTheme = ThemeData(
     highlightElevation: 0,
     splashColor: kBlue,
     enableFeedback: true,
+    foregroundColor: Colors.white,
   ),
   bottomAppBarTheme: const BottomAppBarTheme(
     color: kBlue,
@@ -24,8 +24,10 @@ final kLightTheme = ThemeData(
       color: Colors.black,
       fontWeight: FontWeight.w500,
     ),
+    headline5: TextStyle(fontWeight: FontWeight.w500),
   ),
-  appBarTheme: AppBarTheme(
-    systemOverlayStyle: SystemUiOverlayStyle.dark,
+  colorScheme: const ColorScheme.light().copyWith(
+    primary: kBlue,
+    secondary: kPurple,
   ),
 );
