@@ -20,16 +20,27 @@ final kLightTheme = ThemeData(
     unselectedItemColor: kLightBlue,
   ),
   textTheme: const TextTheme(
+    headline3: TextStyle(
+      color: Colors.white,
+      fontSize: kPaddingL,
+      fontWeight: FontWeight.w500,
+    ),
     headline4: TextStyle(
       color: Colors.black,
       fontWeight: FontWeight.w500,
     ),
     headline5: TextStyle(fontWeight: FontWeight.w500),
     subtitle1: TextStyle(fontWeight: FontWeight.bold),
+    bodyText2: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+      fontSize: kPaddingM,
+    ),
   ),
   colorScheme: const ColorScheme.light().copyWith(
     primary: kBlue,
     secondary: kPurple,
   ),
   dividerColor: kGrey,
+  cardColor: kLightBlue,
 );
