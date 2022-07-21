@@ -1,4 +1,5 @@
 import 'package:flash/config/theme.dart';
+import 'package:flash/flashcards/flashcards_view.dart';
 import 'package:flash/navigation/navigation_view.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,8 @@ class App extends StatelessWidget {
       title: 'Flash',
       debugShowCheckedModeBanner: false,
       theme: kLightTheme,
-      home: const NavigationView(),
+      // home: const NavigationView(),
+      home: const FlashcardsView(),
     );
   }
 }
