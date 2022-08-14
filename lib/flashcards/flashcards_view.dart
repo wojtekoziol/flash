@@ -10,6 +10,22 @@ class FlashcardsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<FlashcardsCubit, FlashcardsState>(
+      builder: (context, state) {
+        return state.maybeMap(
+          finished: (_) => const _FinishedView(),
+          orElse: _FlashcardsView.new,
+        );
+      },
+    );
+  }
+}
+
+class _FlashcardsView extends StatelessWidget {
+  const _FlashcardsView();
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -44,10 +60,15 @@ class FlashcardsView extends StatelessWidget {
                         child: BlocBuilder<FlashcardsCubit, FlashcardsState>(
                           builder: (_, state) {
                             return QuestionCard(
-                              index: state.index + 1,
-                              text: state.when(
+                              index: state.maybeWhen(
+                                question: (_, index) => ++index,
+                                answer: (_, index) => ++index,
+                                orElse: () => 0,
+                              ),
+                              text: state.maybeWhen(
                                 question: (deck, index) => deck[index].question,
                                 answer: (deck, index) => deck[index].answer,
+                                orElse: () => '',
                               ),
                             );
                           },
@@ -62,6 +83,25 @@ class FlashcardsView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: const BottomOptionsBar(),
+    );
+  }
+}
+
+class _FinishedView extends StatelessWidget {
+  const _FinishedView();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pop(),
+      child: const Scaffold(
+        body: Center(
+          child: Text(
+            'Finished',
+            style: TextStyle(fontSize: 20, color: Colors.black),
+          ),
+        ),
+      ),
     );
   }
 }

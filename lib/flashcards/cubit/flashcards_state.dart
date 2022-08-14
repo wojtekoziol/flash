@@ -6,8 +6,11 @@ class FlashcardsState with _$FlashcardsState {
     required List<Flashcard> deck,
     @Default(0) int index,
   }) = _Question;
+
   const factory FlashcardsState.answer({
     required List<Flashcard> deck,
     @Default(0) int index,
   }) = _Answer;
+
+  const factory FlashcardsState.finished() = _Finished;
 }

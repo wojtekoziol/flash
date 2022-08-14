@@ -13,7 +13,7 @@ class BottomOptionsBar extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         final cubit = context.read<FlashcardsCubit>();
-        cubit.state.map(
+        cubit.state.mapOrNull(
           question: (_) => cubit.flip(),
           answer: (_) => cubit.nextQuestion(),
         );
@@ -26,9 +26,10 @@ class BottomOptionsBar extends StatelessWidget {
             child: BlocBuilder<FlashcardsCubit, FlashcardsState>(
               builder: (_, state) {
                 return Text(
-                  state.when(
+                  state.maybeWhen(
                     question: (_, __) => 'Reveal Answer',
                     answer: (_, __) => 'Next question',
+                    orElse: () => '',
                   ),
                   style: theme.textTheme.bodyText2,
                   textAlign: TextAlign.center,

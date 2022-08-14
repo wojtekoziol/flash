@@ -20,6 +20,10 @@ class FlashcardsCubit extends Cubit<FlashcardsState> {
   void nextQuestion() {
     state.whenOrNull(
       answer: (deck, index) {
+        if (index + 1 >= deck.length) {
+          emit(const FlashcardsState.finished());
+          return;
+        }
         emit(FlashcardsState.question(deck: deck, index: ++index));
       },
     );
