@@ -1,19 +1,18 @@
 import 'package:flash/config/constants.dart';
+import 'package:flash/flashcards/cubit/flashcards_cubit.dart';
+import 'package:flash/flashcards/flashcards_view.dart';
+import 'package:flash/flashcards/models/deck.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DeckCard extends StatelessWidget {
   const DeckCard({
     super.key,
-    required this.onTap,
-    required this.category,
-    required this.title,
-    required this.user,
+    required this.deck,
   });
 
-  final VoidCallback onTap;
-  final String category;
-  final String title;
-  final String user;
+  final Deck deck;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,16 @@ class DeckCard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        Navigator.of(context).push(
+          CupertinoPageRoute<void>(
+            builder: (context) => BlocProvider(
+              create: (context) => FlashcardsCubit(deck.deck),
+              child: const FlashcardsView(),
+            ),
+          ),
+        );
+      },
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -57,13 +65,13 @@ class DeckCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      category,
+                      deck.category,
                       style: textTheme.subtitle2!.copyWith(
                         color: theme.colorScheme.primary,
                       ),
                     ),
                     const SizedBox(height: kPaddingS),
-                    Text(title, style: textTheme.subtitle1),
+                    Text(deck.title, style: textTheme.subtitle1),
                     const SizedBox(height: kPaddingS),
                     Row(
                       children: [
@@ -72,7 +80,7 @@ class DeckCard extends StatelessWidget {
                           backgroundColor: Colors.amber,
                         ),
                         const SizedBox(width: kPaddingS),
-                        Text(user, style: textTheme.bodyText1),
+                        Text(deck.user, style: textTheme.bodyText1),
                       ],
                     ),
                   ],
