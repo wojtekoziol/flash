@@ -1,6 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/home/widgets/app_logo.dart';
-import 'package:flash/home/widgets/card_deck.dart';
+import 'package:flash/home/widgets/deck_card.dart';
 import 'package:flash/home/widgets/home_widget.dart';
 import 'package:flash/home/widgets/profile_picture.dart';
 import 'package:flutter/material.dart';
@@ -45,13 +45,15 @@ class HomeView extends StatelessWidget {
                   style: theme.textTheme.subtitle1,
                 ),
                 const SizedBox(height: kPaddingL),
-                const CardDeck(
+                DeckCard(
+                  onTap: () {},
                   category: 'Programming',
                   title: 'Fundamentals on Computer Science',
                   user: 'Cody Fisher',
                 ),
                 const SizedBox(height: kPaddingL),
-                const CardDeck(
+                DeckCard(
+                  onTap: () {},
                   category: 'Knowledge',
                   title: 'Knowledge about Environmental & Science',
                   user: 'Jacob Jones',

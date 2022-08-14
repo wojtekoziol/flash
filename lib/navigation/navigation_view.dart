@@ -15,6 +15,7 @@ class NavigationView extends HookWidget {
 
     return Scaffold(
       body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
           ValueListenableBuilder<int>(
             valueListenable: indexNotifier,
@@ -25,10 +26,7 @@ class NavigationView extends HookWidget {
               );
             },
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: BottomNavbar(indexNotifier: indexNotifier),
-          ),
+          BottomNavbar(indexNotifier: indexNotifier),
         ],
       ),
     );
