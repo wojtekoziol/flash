@@ -16,7 +16,7 @@ class BottomNavbar extends StatelessWidget {
     return SafeArea(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: kPaddingM),
-        height: 85,
+        height: 90,
         child: Scaffold(
           backgroundColor: Colors.transparent,
           floatingActionButton: const _FloatingActionButton(),

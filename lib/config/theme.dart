@@ -34,7 +34,6 @@ final kLightTheme = ThemeData(
     bodyText2: TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.w500,
-      fontSize: kPaddingM,
     ),
   ),
   colorScheme: const ColorScheme.light().copyWith(
