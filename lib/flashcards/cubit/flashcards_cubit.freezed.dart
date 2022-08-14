@@ -16,24 +16,25 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FlashcardsState {
-  List<Flashcard> get deck => throw _privateConstructorUsedError;
-  int get index => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<Flashcard> deck, int index) question,
     required TResult Function(List<Flashcard> deck, int index) answer,
+    required TResult Function() finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<Flashcard> deck, int index)? question,
     TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Flashcard> deck, int index)? question,
     TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -41,24 +42,23 @@ mixin _$FlashcardsState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Question value) question,
     required TResult Function(_Answer value) answer,
+    required TResult Function(_Finished value) finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Question value)? question,
     TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Question value)? question,
     TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $FlashcardsStateCopyWith<FlashcardsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -67,7 +67,6 @@ abstract class $FlashcardsStateCopyWith<$Res> {
   factory $FlashcardsStateCopyWith(
           FlashcardsState value, $Res Function(FlashcardsState) then) =
       _$FlashcardsStateCopyWithImpl<$Res>;
-  $Res call({List<Flashcard> deck, int index});
 }
 
 /// @nodoc
@@ -78,32 +77,13 @@ class _$FlashcardsStateCopyWithImpl<$Res>
   final FlashcardsState _value;
   // ignore: unused_field
   final $Res Function(FlashcardsState) _then;
-
-  @override
-  $Res call({
-    Object? deck = freezed,
-    Object? index = freezed,
-  }) {
-    return _then(_value.copyWith(
-      deck: deck == freezed
-          ? _value.deck
-          : deck // ignore: cast_nullable_to_non_nullable
-              as List<Flashcard>,
-      index: index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$$_QuestionCopyWith<$Res>
-    implements $FlashcardsStateCopyWith<$Res> {
+abstract class _$$_QuestionCopyWith<$Res> {
   factory _$$_QuestionCopyWith(
           _$_Question value, $Res Function(_$_Question) then) =
       __$$_QuestionCopyWithImpl<$Res>;
-  @override
   $Res call({List<Flashcard> deck, int index});
 }
 
@@ -183,6 +163,7 @@ class _$_Question implements _Question {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Flashcard> deck, int index) question,
     required TResult Function(List<Flashcard> deck, int index) answer,
+    required TResult Function() finished,
   }) {
     return question(deck, index);
   }
@@ -192,6 +173,7 @@ class _$_Question implements _Question {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<Flashcard> deck, int index)? question,
     TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
   }) {
     return question?.call(deck, index);
   }
@@ -201,6 +183,7 @@ class _$_Question implements _Question {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Flashcard> deck, int index)? question,
     TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
     required TResult orElse(),
   }) {
     if (question != null) {
@@ -214,6 +197,7 @@ class _$_Question implements _Question {
   TResult map<TResult extends Object?>({
     required TResult Function(_Question value) question,
     required TResult Function(_Answer value) answer,
+    required TResult Function(_Finished value) finished,
   }) {
     return question(this);
   }
@@ -223,6 +207,7 @@ class _$_Question implements _Question {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Question value)? question,
     TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
   }) {
     return question?.call(this);
   }
@@ -232,6 +217,7 @@ class _$_Question implements _Question {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Question value)? question,
     TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
     required TResult orElse(),
   }) {
     if (question != null) {
@@ -245,22 +231,17 @@ abstract class _Question implements FlashcardsState {
   const factory _Question(
       {required final List<Flashcard> deck, final int index}) = _$_Question;
 
-  @override
   List<Flashcard> get deck;
-  @override
   int get index;
-  @override
   @JsonKey(ignore: true)
   _$$_QuestionCopyWith<_$_Question> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AnswerCopyWith<$Res>
-    implements $FlashcardsStateCopyWith<$Res> {
+abstract class _$$_AnswerCopyWith<$Res> {
   factory _$$_AnswerCopyWith(_$_Answer value, $Res Function(_$_Answer) then) =
       __$$_AnswerCopyWithImpl<$Res>;
-  @override
   $Res call({List<Flashcard> deck, int index});
 }
 
@@ -338,6 +319,7 @@ class _$_Answer implements _Answer {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Flashcard> deck, int index) question,
     required TResult Function(List<Flashcard> deck, int index) answer,
+    required TResult Function() finished,
   }) {
     return answer(deck, index);
   }
@@ -347,6 +329,7 @@ class _$_Answer implements _Answer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(List<Flashcard> deck, int index)? question,
     TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
   }) {
     return answer?.call(deck, index);
   }
@@ -356,6 +339,7 @@ class _$_Answer implements _Answer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Flashcard> deck, int index)? question,
     TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
     required TResult orElse(),
   }) {
     if (answer != null) {
@@ -369,6 +353,7 @@ class _$_Answer implements _Answer {
   TResult map<TResult extends Object?>({
     required TResult Function(_Question value) question,
     required TResult Function(_Answer value) answer,
+    required TResult Function(_Finished value) finished,
   }) {
     return answer(this);
   }
@@ -378,6 +363,7 @@ class _$_Answer implements _Answer {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Question value)? question,
     TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
   }) {
     return answer?.call(this);
   }
@@ -387,6 +373,7 @@ class _$_Answer implements _Answer {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Question value)? question,
     TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
     required TResult orElse(),
   }) {
     if (answer != null) {
@@ -400,12 +387,120 @@ abstract class _Answer implements FlashcardsState {
   const factory _Answer(
       {required final List<Flashcard> deck, final int index}) = _$_Answer;
 
-  @override
   List<Flashcard> get deck;
-  @override
   int get index;
-  @override
   @JsonKey(ignore: true)
   _$$_AnswerCopyWith<_$_Answer> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_FinishedCopyWith<$Res> {
+  factory _$$_FinishedCopyWith(
+          _$_Finished value, $Res Function(_$_Finished) then) =
+      __$$_FinishedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_FinishedCopyWithImpl<$Res>
+    extends _$FlashcardsStateCopyWithImpl<$Res>
+    implements _$$_FinishedCopyWith<$Res> {
+  __$$_FinishedCopyWithImpl(
+      _$_Finished _value, $Res Function(_$_Finished) _then)
+      : super(_value, (v) => _then(v as _$_Finished));
+
+  @override
+  _$_Finished get _value => super._value as _$_Finished;
+}
+
+/// @nodoc
+
+class _$_Finished implements _Finished {
+  const _$_Finished();
+
+  @override
+  String toString() {
+    return 'FlashcardsState.finished()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Finished);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<Flashcard> deck, int index) question,
+    required TResult Function(List<Flashcard> deck, int index) answer,
+    required TResult Function() finished,
+  }) {
+    return finished();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(List<Flashcard> deck, int index)? question,
+    TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
+  }) {
+    return finished?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<Flashcard> deck, int index)? question,
+    TResult Function(List<Flashcard> deck, int index)? answer,
+    TResult Function()? finished,
+    required TResult orElse(),
+  }) {
+    if (finished != null) {
+      return finished();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Question value) question,
+    required TResult Function(_Answer value) answer,
+    required TResult Function(_Finished value) finished,
+  }) {
+    return finished(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Question value)? question,
+    TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
+  }) {
+    return finished?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Question value)? question,
+    TResult Function(_Answer value)? answer,
+    TResult Function(_Finished value)? finished,
+    required TResult orElse(),
+  }) {
+    if (finished != null) {
+      return finished(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Finished implements FlashcardsState {
+  const factory _Finished() = _$_Finished;
 }
