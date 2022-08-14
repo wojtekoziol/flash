@@ -36,7 +36,8 @@ class QuestionCard extends StatelessWidget {
             ),
           ),
         ),
-        DecoratedBox(
+        Container(
+          width: double.infinity,
           decoration: BoxDecoration(
             color: theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(kPaddingL),

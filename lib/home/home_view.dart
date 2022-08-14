@@ -1,4 +1,6 @@
 import 'package:flash/config/constants.dart';
+import 'package:flash/flashcards/models/deck.dart';
+import 'package:flash/flashcards/models/flashcard.dart';
 import 'package:flash/home/widgets/app_logo.dart';
 import 'package:flash/home/widgets/deck_card.dart';
 import 'package:flash/home/widgets/home_widget.dart';
@@ -45,18 +47,31 @@ class HomeView extends StatelessWidget {
                   style: theme.textTheme.subtitle1,
                 ),
                 const SizedBox(height: kPaddingL),
-                DeckCard(
-                  onTap: () {},
-                  category: 'Programming',
-                  title: 'Fundamentals on Computer Science',
-                  user: 'Cody Fisher',
+                const DeckCard(
+                  deck: Deck(
+                    category: 'Programming',
+                    title: 'Fundamentals on Computer Science',
+                    user: 'Cody Fisher',
+                    deck: [
+                      Flashcard(
+                        question: 'Question 1',
+                        answer: 'Answer 1',
+                      ),
+                      Flashcard(
+                        question: 'Question 2',
+                        answer: 'Answer 2',
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: kPaddingL),
-                DeckCard(
-                  onTap: () {},
-                  category: 'Knowledge',
-                  title: 'Knowledge about Environmental & Science',
-                  user: 'Jacob Jones',
+                const DeckCard(
+                  deck: Deck(
+                    category: 'Knowledge',
+                    title: 'Knowledge about Environmental & Science',
+                    user: 'Jacob Jones',
+                    deck: [],
+                  ),
                 ),
               ],
             ),

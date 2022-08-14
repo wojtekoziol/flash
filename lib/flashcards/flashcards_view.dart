@@ -1,7 +1,9 @@
 import 'package:flash/config/constants.dart';
+import 'package:flash/flashcards/cubit/flashcards_cubit.dart';
 import 'package:flash/flashcards/widgets/bottom_options_bar.dart';
 import 'package:flash/flashcards/widgets/question_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FlashcardsView extends StatelessWidget {
   const FlashcardsView({super.key});
@@ -35,12 +37,20 @@ class FlashcardsView extends StatelessWidget {
                         style: theme.textTheme.headline3,
                       ),
                       const SizedBox(height: kPaddingXL),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: kPaddingL),
-                        child: QuestionCard(
-                          index: 1,
-                          text: 'What is the supercontinent broke apart to '
-                              'create the continents we know today?',
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: kPaddingL,
+                        ),
+                        child: BlocBuilder<FlashcardsCubit, FlashcardsState>(
+                          builder: (context, state) {
+                            return QuestionCard(
+                              index: state.index + 1,
+                              text: state.when(
+                                question: (deck, index) => deck[index].question,
+                                answer: (deck, index) => deck[index].answer,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
