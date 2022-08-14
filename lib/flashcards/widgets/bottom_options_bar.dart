@@ -1,5 +1,7 @@
 import 'package:flash/config/constants.dart';
+import 'package:flash/flashcards/cubit/flashcards_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomOptionsBar extends StatelessWidget {
   const BottomOptionsBar({super.key});
@@ -8,15 +10,31 @@ class BottomOptionsBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return ColoredBox(
-      color: theme.floatingActionButtonTheme.backgroundColor!,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: kPaddingL, bottom: kPaddingM),
-          child: Text(
-            'Reveal Answer',
-            style: theme.textTheme.bodyText2,
-            textAlign: TextAlign.center,
+    return GestureDetector(
+      onTap: () {
+        final cubit = context.read<FlashcardsCubit>();
+        cubit.state.map(
+          question: (_) => cubit.flip(),
+          answer: (_) => cubit.nextQuestion(),
+        );
+      },
+      child: ColoredBox(
+        color: theme.floatingActionButtonTheme.backgroundColor!,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: kPaddingL, bottom: kPaddingM),
+            child: BlocBuilder<FlashcardsCubit, FlashcardsState>(
+              builder: (_, state) {
+                return Text(
+                  state.when(
+                    question: (_, __) => 'Reveal Answer',
+                    answer: (_, __) => 'Next question',
+                  ),
+                  style: theme.textTheme.bodyText2,
+                  textAlign: TextAlign.center,
+                );
+              },
+            ),
           ),
         ),
       ),
