@@ -42,7 +42,7 @@ class FlashcardsView extends StatelessWidget {
                           horizontal: kPaddingL,
                         ),
                         child: BlocBuilder<FlashcardsCubit, FlashcardsState>(
-                          builder: (context, state) {
+                          builder: (_, state) {
                             return QuestionCard(
                               index: state.index + 1,
                               text: state.when(

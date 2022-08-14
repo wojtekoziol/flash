@@ -23,8 +23,8 @@ class DeckCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           CupertinoPageRoute<void>(
-            builder: (context) => BlocProvider(
-              create: (context) => FlashcardsCubit(deck.deck),
+            builder: (_) => BlocProvider(
+              create: (_) => FlashcardsCubit(deck.deck),
               child: const FlashcardsView(),
             ),
           ),
