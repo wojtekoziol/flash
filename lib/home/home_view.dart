@@ -1,6 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/flashcards/models/deck.dart';
-import 'package:flash/flashcards/services/sheet_service.dart';
+import 'package:flash/flashcards/repository/gsheets_storage_repo.dart';
 import 'package:flash/home/widgets/app_logo.dart';
 import 'package:flash/home/widgets/deck_card.dart';
 import 'package:flash/home/widgets/home_widget.dart';
@@ -49,7 +49,7 @@ class HomeView extends StatelessWidget {
                 const SizedBox(height: kPaddingL),
                 Center(
                   child: FutureBuilder<Deck>(
-                    future: SheetService(
+                    future: GSheetsStorageRepo(
                       '1lKHd-QQ5Sl03996zhYnNPHDWFXutm4_dcEN9SHqxUsk',
                     ).getDeck(),
                     builder: (_, snapshot) {
