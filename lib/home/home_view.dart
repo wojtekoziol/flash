@@ -1,10 +1,10 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/flashcards/models/deck.dart';
+import 'package:flash/flashcards/services/sheet_service.dart';
 import 'package:flash/home/widgets/app_logo.dart';
 import 'package:flash/home/widgets/deck_card.dart';
 import 'package:flash/home/widgets/home_widget.dart';
 import 'package:flash/home/widgets/profile_picture.dart';
-import 'package:flash/services/sheet_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
