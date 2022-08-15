@@ -7,7 +7,11 @@ part 'flashcards_cubit.freezed.dart';
 
 class FlashcardsCubit extends Cubit<FlashcardsState> {
   FlashcardsCubit(List<Flashcard> deck)
-      : super(FlashcardsState.question(deck: deck));
+      : super(
+          deck.isNotEmpty
+              ? FlashcardsState.question(deck: deck)
+              : const FlashcardsState.finished(),
+        );
 
   void flip() {
     state.whenOrNull(
