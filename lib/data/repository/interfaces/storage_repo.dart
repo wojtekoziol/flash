@@ -1,7 +1,7 @@
-import 'package:flash/flashcards/models/deck.dart';
-import 'package:flash/flashcards/models/flashcard.dart';
+import 'package:flash/data/models/deck.dart';
+import 'package:flash/data/models/flashcard.dart';
 
-abstract class CloudStorageRepo {
+abstract class StorageRepo {
   Future<List<Flashcard>> getFlashcards();
 
   Future<String> getTitle();

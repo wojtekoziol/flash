@@ -1,10 +1,10 @@
 import 'package:flash/config/constants.dart';
-import 'package:flash/flashcards/models/deck.dart';
-import 'package:flash/flashcards/repository/gsheets_storage_repo.dart';
-import 'package:flash/home/widgets/app_logo.dart';
-import 'package:flash/home/widgets/deck_card.dart';
-import 'package:flash/home/widgets/home_widget.dart';
-import 'package:flash/home/widgets/profile_picture.dart';
+import 'package:flash/data/models/deck.dart';
+import 'package:flash/data/repository/gsheets_storage_repo.dart';
+import 'package:flash/view/home/widgets/app_logo.dart';
+import 'package:flash/view/home/widgets/deck_card.dart';
+import 'package:flash/view/home/widgets/home_widget.dart';
+import 'package:flash/view/home/widgets/profile_picture.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {

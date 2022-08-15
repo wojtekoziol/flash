@@ -1,7 +1,7 @@
 import 'package:flash/config/constants.dart';
-import 'package:flash/flashcards/cubit/flashcards_cubit.dart';
-import 'package:flash/flashcards/flashcards_view.dart';
-import 'package:flash/flashcards/models/deck.dart';
+import 'package:flash/data/bloc/flashcards/flashcards_cubit.dart';
+import 'package:flash/data/models/deck.dart';
+import 'package:flash/view/flashcards/flashcards_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

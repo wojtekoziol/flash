@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flash/flashcards/models/flashcard.dart';
+import 'package:flash/data/models/flashcard.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'flashcards_state.dart';

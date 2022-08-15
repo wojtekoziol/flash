@@ -1,7 +1,7 @@
 import 'package:flash/config/constants.dart';
-import 'package:flash/flashcards/cubit/flashcards_cubit.dart';
-import 'package:flash/flashcards/widgets/bottom_options_bar.dart';
-import 'package:flash/flashcards/widgets/question_card.dart';
+import 'package:flash/data/bloc/flashcards/flashcards_cubit.dart';
+import 'package:flash/view/flashcards/widgets/bottom_options_bar.dart';
+import 'package:flash/view/flashcards/widgets/question_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
