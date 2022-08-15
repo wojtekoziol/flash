@@ -1,10 +1,10 @@
 import 'package:flash/config/constants.dart';
-import 'package:flash/flashcards/models/flashcard.dart';
-import 'package:flash/flashcards/repository/interfaces/cloud_storage_repo.dart';
+import 'package:flash/data/models/flashcard.dart';
+import 'package:flash/data/repository/interfaces/storage_repo.dart';
 import 'package:googleapis/sheets/v4.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
-class GSheetsStorageRepo extends CloudStorageRepo {
+class GSheetsStorageRepo extends StorageRepo {
   GSheetsStorageRepo(this._sheetID) {
     _init = _initRepo();
   }

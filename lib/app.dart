@@ -1,5 +1,5 @@
 import 'package:flash/config/theme.dart';
-import 'package:flash/navigation/navigation_view.dart';
+import 'package:flash/view/navigation/navigation_view.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {

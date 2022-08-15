@@ -1,6 +1,6 @@
-import 'package:flash/home/home_view.dart';
-import 'package:flash/navigation/widgets/bottom_navbar.dart';
-import 'package:flash/profile/profile_view.dart';
+import 'package:flash/view/home/home_view.dart';
+import 'package:flash/view/navigation/widgets/bottom_navbar.dart';
+import 'package:flash/view/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 

@@ -1,4 +1,4 @@
-import 'package:flash/flashcards/models/flashcard.dart';
+import 'package:flash/data/models/flashcard.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'deck.freezed.dart';

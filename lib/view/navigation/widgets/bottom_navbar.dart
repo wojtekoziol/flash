@@ -1,5 +1,5 @@
 import 'package:flash/config/constants.dart';
-import 'package:flash/navigation/widgets/bottom_navbar_item.dart';
+import 'package:flash/view/navigation/widgets/bottom_navbar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:unicons/unicons.dart';
 
