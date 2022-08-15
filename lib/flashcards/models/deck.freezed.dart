@@ -23,7 +23,7 @@ mixin _$Deck {
   String get category => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get user => throw _privateConstructorUsedError;
-  List<Flashcard> get deck => throw _privateConstructorUsedError;
+  List<Flashcard> get flashcards => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,8 @@ mixin _$Deck {
 abstract class $DeckCopyWith<$Res> {
   factory $DeckCopyWith(Deck value, $Res Function(Deck) then) =
       _$DeckCopyWithImpl<$Res>;
-  $Res call({String category, String title, String user, List<Flashcard> deck});
+  $Res call(
+      {String category, String title, String user, List<Flashcard> flashcards});
 }
 
 /// @nodoc
@@ -50,7 +51,7 @@ class _$DeckCopyWithImpl<$Res> implements $DeckCopyWith<$Res> {
     Object? category = freezed,
     Object? title = freezed,
     Object? user = freezed,
-    Object? deck = freezed,
+    Object? flashcards = freezed,
   }) {
     return _then(_value.copyWith(
       category: category == freezed
@@ -65,9 +66,9 @@ class _$DeckCopyWithImpl<$Res> implements $DeckCopyWith<$Res> {
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String,
-      deck: deck == freezed
-          ? _value.deck
-          : deck // ignore: cast_nullable_to_non_nullable
+      flashcards: flashcards == freezed
+          ? _value.flashcards
+          : flashcards // ignore: cast_nullable_to_non_nullable
               as List<Flashcard>,
     ));
   }
@@ -78,7 +79,8 @@ abstract class _$$_DeckCopyWith<$Res> implements $DeckCopyWith<$Res> {
   factory _$$_DeckCopyWith(_$_Deck value, $Res Function(_$_Deck) then) =
       __$$_DeckCopyWithImpl<$Res>;
   @override
-  $Res call({String category, String title, String user, List<Flashcard> deck});
+  $Res call(
+      {String category, String title, String user, List<Flashcard> flashcards});
 }
 
 /// @nodoc
@@ -95,7 +97,7 @@ class __$$_DeckCopyWithImpl<$Res> extends _$DeckCopyWithImpl<$Res>
     Object? category = freezed,
     Object? title = freezed,
     Object? user = freezed,
-    Object? deck = freezed,
+    Object? flashcards = freezed,
   }) {
     return _then(_$_Deck(
       category: category == freezed
@@ -110,9 +112,9 @@ class __$$_DeckCopyWithImpl<$Res> extends _$DeckCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as String,
-      deck: deck == freezed
-          ? _value._deck
-          : deck // ignore: cast_nullable_to_non_nullable
+      flashcards: flashcards == freezed
+          ? _value._flashcards
+          : flashcards // ignore: cast_nullable_to_non_nullable
               as List<Flashcard>,
     ));
   }
@@ -125,8 +127,8 @@ class _$_Deck implements _Deck {
       {required this.category,
       required this.title,
       required this.user,
-      required final List<Flashcard> deck})
-      : _deck = deck;
+      required final List<Flashcard> flashcards})
+      : _flashcards = flashcards;
 
   factory _$_Deck.fromJson(Map<String, dynamic> json) => _$$_DeckFromJson(json);
 
@@ -136,16 +138,16 @@ class _$_Deck implements _Deck {
   final String title;
   @override
   final String user;
-  final List<Flashcard> _deck;
+  final List<Flashcard> _flashcards;
   @override
-  List<Flashcard> get deck {
+  List<Flashcard> get flashcards {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_deck);
+    return EqualUnmodifiableListView(_flashcards);
   }
 
   @override
   String toString() {
-    return 'Deck(category: $category, title: $title, user: $user, deck: $deck)';
+    return 'Deck(category: $category, title: $title, user: $user, flashcards: $flashcards)';
   }
 
   @override
@@ -156,7 +158,8 @@ class _$_Deck implements _Deck {
             const DeepCollectionEquality().equals(other.category, category) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.user, user) &&
-            const DeepCollectionEquality().equals(other._deck, _deck));
+            const DeepCollectionEquality()
+                .equals(other._flashcards, _flashcards));
   }
 
   @JsonKey(ignore: true)
@@ -166,7 +169,7 @@ class _$_Deck implements _Deck {
       const DeepCollectionEquality().hash(category),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(user),
-      const DeepCollectionEquality().hash(_deck));
+      const DeepCollectionEquality().hash(_flashcards));
 
   @JsonKey(ignore: true)
   @override
@@ -186,7 +189,7 @@ abstract class _Deck implements Deck {
       {required final String category,
       required final String title,
       required final String user,
-      required final List<Flashcard> deck}) = _$_Deck;
+      required final List<Flashcard> flashcards}) = _$_Deck;
 
   factory _Deck.fromJson(Map<String, dynamic> json) = _$_Deck.fromJson;
 
@@ -197,7 +200,7 @@ abstract class _Deck implements Deck {
   @override
   String get user;
   @override
-  List<Flashcard> get deck;
+  List<Flashcard> get flashcards;
   @override
   @JsonKey(ignore: true)
   _$$_DeckCopyWith<_$_Deck> get copyWith => throw _privateConstructorUsedError;
