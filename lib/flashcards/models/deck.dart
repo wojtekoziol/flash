@@ -10,7 +10,7 @@ class Deck with _$Deck {
     required String category,
     required String title,
     required String user,
-    required List<Flashcard> deck,
+    required List<Flashcard> flashcards,
   }) = _Deck;
 
   factory Deck.fromJson(Map<String, Object?> json) => _$DeckFromJson(json);
