@@ -7,7 +7,9 @@
 
 import 'package:flash/app.dart';
 import 'package:flash/bootstrap.dart';
+import 'package:flash/config/get_it.dart';
 
 void main() {
+  initGetIt();
   bootstrap(() => const App());
 }
