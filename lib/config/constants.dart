@@ -19,7 +19,7 @@ const kDefaultAnimDuration = Duration(milliseconds: 200);
 const kLongAnimDuration = Duration(milliseconds: 300);
 
 // Auth
-const credentials = {
+const kCredentials = {
   'type': 'service_account',
   'project_id': 'flash-359510',
   'private_key_id': 'fd32ca4de5c5a7334fc62aabef31957632bd1ad6',

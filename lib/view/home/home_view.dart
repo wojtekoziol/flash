@@ -1,6 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/models/deck.dart';
-import 'package:flash/data/repository/gsheets_storage_repo.dart';
+import 'package:flash/data/repository/gdrive_repo.dart';
 import 'package:flash/view/home/widgets/app_logo.dart';
 import 'package:flash/view/home/widgets/deck_card.dart';
 import 'package:flash/view/home/widgets/home_widget.dart';
@@ -47,19 +47,23 @@ class HomeView extends StatelessWidget {
                   style: theme.textTheme.subtitle1,
                 ),
                 const SizedBox(height: kPaddingL),
+
                 Center(
-                  child: FutureBuilder<Deck>(
-                    future: GSheetsStorageRepo(
-                      '1lKHd-QQ5Sl03996zhYnNPHDWFXutm4_dcEN9SHqxUsk',
-                    ).getDeck(),
+                  child: FutureBuilder<List<Deck>>(
+                    future: GDriveRepo().getDecks(),
                     builder: (_, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       }
 
-                      if (snapshot.hasData) {
-                        return DeckCard(
-                          deck: snapshot.data!,
+                      if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                        return Column(
+                          children: [
+                            for (final deck in snapshot.data!) ...[
+                              DeckCard(deck: deck),
+                              const SizedBox(height: kPaddingL),
+                            ]
+                          ],
                         );
                       }
 
