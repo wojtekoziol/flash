@@ -14,9 +14,9 @@ const kGrey = Color.fromARGB(255, 235, 235, 235);
 const kLightBlue = Color(0xffc3d2ff);
 
 // Animations
-const kShortAnimDuration = Duration(milliseconds: 100);
-const kDefaultAnimDuration = Duration(milliseconds: 200);
-const kLongAnimDuration = Duration(milliseconds: 300);
+const kShortAnimDuration = Duration(milliseconds: 200);
+const kDefaultAnimDuration = Duration(milliseconds: 300);
+const kLongAnimDuration = Duration(milliseconds: 500);
 
 // Auth
 const kCredentials = {
