@@ -38,7 +38,7 @@ class DeckCard extends StatelessWidget {
         OpenContainer(
           openElevation: 0,
           closedElevation: 0,
-          transitionDuration: kLongAnimDuration,
+          transitionDuration: kDefaultAnimDuration,
           openShape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kPaddingL),
           ),
