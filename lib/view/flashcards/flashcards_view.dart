@@ -39,46 +39,26 @@ class _FlashcardsView extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints.expand(),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: const Alignment(0, -0.5),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Earth Science',
-                        style: theme.textTheme.headline3,
-                      ),
-                      const SizedBox(height: kPaddingXL),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: kPaddingL,
-                        ),
-                        child: BlocBuilder<FlashcardsCubit, FlashcardsState>(
-                          builder: (_, state) {
-                            return QuestionCard(
-                              index: state.maybeWhen(
-                                question: (_, index) => ++index,
-                                answer: (_, index) => ++index,
-                                orElse: () => 0,
-                              ),
-                              text: state.maybeWhen(
-                                question: (deck, index) => deck[index].question,
-                                answer: (deck, index) => deck[index].answer,
-                                orElse: () => '',
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+          child: Stack(
+            children: [
+              Align(
+                alignment: const Alignment(0, -0.5),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Earth Science',
+                      style: theme.textTheme.headline3,
+                    ),
+                    const SizedBox(height: kPaddingXL),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: kPaddingL),
+                      child: QuestionCard(),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
