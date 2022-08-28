@@ -6,29 +6,29 @@ part 'flashcards_state.dart';
 part 'flashcards_cubit.freezed.dart';
 
 class FlashcardsCubit extends Cubit<FlashcardsState> {
-  FlashcardsCubit(List<Flashcard> deck)
+  FlashcardsCubit(List<Flashcard> flashcards)
       : super(
-          deck.isNotEmpty
-              ? FlashcardsState.question(deck: deck)
+          flashcards.isNotEmpty
+              ? FlashcardsState.question(flashcards: flashcards)
               : const FlashcardsState.finished(),
         );
 
   void flip() {
     state.whenOrNull(
-      question: (deck, index) {
-        emit(FlashcardsState.answer(deck: deck, index: index));
+      question: (flashcards, index) {
+        emit(FlashcardsState.answer(flashcards: flashcards, index: index));
       },
     );
   }
 
   void nextQuestion() {
     state.whenOrNull(
-      answer: (deck, index) {
-        if (index + 1 >= deck.length) {
+      answer: (flashcards, index) {
+        if (index + 1 >= flashcards.length) {
           emit(const FlashcardsState.finished());
           return;
         }
-        emit(FlashcardsState.question(deck: deck, index: ++index));
+        emit(FlashcardsState.question(flashcards: flashcards, index: ++index));
       },
     );
   }
