@@ -45,18 +45,18 @@ class QuestionCard extends HookWidget {
           },
           builder: (_, state) {
             final index = state.maybeWhen(
-              question: (deck, index) => ++index,
-              answer: (deck, index) => ++index,
+              question: (flashcards, index) => ++index,
+              answer: (flashcards, index) => ++index,
               orElse: () => 0,
             );
             final question = state.maybeWhen(
-              question: (deck, index) => deck[index].question,
-              answer: (deck, index) => deck[index].question,
+              question: (flashcards, index) => flashcards[index].question,
+              answer: (flashcards, index) => flashcards[index].question,
               orElse: () => '',
             );
             final answer = state.maybeWhen(
-              question: (deck, index) => deck[index].answer,
-              answer: (deck, index) => deck[index].answer,
+              question: (flashcards, index) => flashcards[index].answer,
+              answer: (flashcards, index) => flashcards[index].answer,
               orElse: () => '',
             );
 
