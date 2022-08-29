@@ -58,11 +58,14 @@ class _FlashcardsView extends StatelessWidget {
                   ],
                 ),
               ),
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: BottomOptionsBar(),
+              )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const BottomOptionsBar(),
     );
   }
 }

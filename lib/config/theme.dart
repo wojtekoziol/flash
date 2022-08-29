@@ -42,4 +42,7 @@ final kLightTheme = ThemeData(
   ),
   dividerColor: kGrey,
   cardColor: kLightBlue,
+  iconTheme: const IconThemeData(
+    color: Colors.white,
+  ),
 );
