@@ -60,53 +60,5 @@ void main() {
         expect: List.empty,
       );
     });
-
-    group('nextQuestion()', () {
-      blocTest<FlashcardsCubit, FlashcardsState>(
-        'emits [FlashcardsState.question] with incremented index '
-        'when current state is [FlashcardsState.answer] '
-        'and nextQuestion() is called.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: () => const FlashcardsState.answer(
-          flashcards: flashcards,
-          index: 0,
-        ),
-        act: (cubit) => cubit.nextQuestion(),
-        expect: () => const [
-          FlashcardsState.question(flashcards: flashcards, index: 1),
-        ],
-      );
-
-      blocTest<FlashcardsCubit, FlashcardsState>(
-        'emits [FlashcardsState.finished] when current state '
-        'is [FlashcardsState.answer] and there are no more flashcards '
-        'and nextQuestion() is called.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: () => const FlashcardsState.answer(
-          flashcards: flashcards,
-          index: 1,
-        ),
-        act: (cubit) => cubit.nextQuestion(),
-        expect: () => const [FlashcardsState.finished()],
-      );
-
-      blocTest<FlashcardsCubit, FlashcardsState>(
-        'does not emit anything when state is [FlashcardsState.question] '
-        'and nextQuestion() is called.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: () => const FlashcardsState.question(flashcards: flashcards),
-        act: (cubit) => cubit.nextQuestion(),
-        expect: List.empty,
-      );
-
-      blocTest<FlashcardsCubit, FlashcardsState>(
-        'does not emit anything when state is [FlashcardsState.finished] '
-        'and nextQuestion() is called.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: FlashcardsState.finished,
-        act: (cubit) => cubit.nextQuestion(),
-        expect: List.empty,
-      );
-    });
   });
 }

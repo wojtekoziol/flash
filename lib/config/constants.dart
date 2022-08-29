@@ -8,8 +8,8 @@ const kPaddingXL = 48.0;
 
 // Colors
 const kOrange = Color(0xffffa93a);
-const kBlue = Color(0xff0e6bf7);
-const kPurple = Color(0xff7b68db);
+const kBlue = Color.fromARGB(255, 28, 117, 249);
+const kPurple = Color.fromARGB(255, 132, 88, 208);
 const kGrey = Color.fromARGB(255, 235, 235, 235);
 const kLightBlue = Color(0xffc3d2ff);
 

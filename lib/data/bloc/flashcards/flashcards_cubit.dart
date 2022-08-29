@@ -9,7 +9,9 @@ class FlashcardsCubit extends Cubit<FlashcardsState> {
   FlashcardsCubit(List<Flashcard> flashcards)
       : super(
           flashcards.isNotEmpty
-              ? FlashcardsState.question(flashcards: flashcards)
+              ? FlashcardsState.question(
+                  flashcards: List.from(flashcards)..shuffle(),
+                )
               : const FlashcardsState.finished(),
         );
 
@@ -21,14 +23,45 @@ class FlashcardsCubit extends Cubit<FlashcardsState> {
     );
   }
 
-  void nextQuestion() {
+  void know() {
     state.whenOrNull(
       answer: (flashcards, index) {
-        if (index + 1 >= flashcards.length) {
+        final cards = List<Flashcard>.from(flashcards)..removeAt(index);
+
+        if (cards.isEmpty) {
           emit(const FlashcardsState.finished());
           return;
         }
-        emit(FlashcardsState.question(flashcards: flashcards, index: ++index));
+
+        if (index + 1 >= cards.length) {
+          emit(FlashcardsState.question(
+            flashcards: cards..shuffle(),
+          ));
+          return;
+        }
+
+        emit(FlashcardsState.question(
+          flashcards: cards,
+          index: index,
+        ));
+      },
+    );
+  }
+
+  void dontKnow() {
+    state.whenOrNull(
+      answer: (flashcards, index) {
+        if (index + 1 >= flashcards.length) {
+          emit(FlashcardsState.question(
+            flashcards: List.from(flashcards)..shuffle(),
+          ));
+          return;
+        }
+
+        emit(FlashcardsState.question(
+          flashcards: flashcards,
+          index: ++index,
+        ));
       },
     );
   }
