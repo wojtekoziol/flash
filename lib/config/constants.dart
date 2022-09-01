@@ -18,6 +18,8 @@ const kShortAnimDuration = Duration(milliseconds: 300);
 const kDefaultAnimDuration = Duration(milliseconds: 500);
 const kLongAnimDuration = Duration(milliseconds: 750);
 
+const kDefaultAnimCurve = Curves.ease;
+
 // Auth
 const kCredentials = {
   'type': 'service_account',
