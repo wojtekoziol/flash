@@ -8,8 +8,10 @@
 import 'package:flash/app.dart';
 import 'package:flash/bootstrap.dart';
 import 'package:flash/config/get_it.dart';
+import 'package:flash/config/hive.dart';
 
-void main() {
+Future<void> main() async {
   initGetIt();
-  bootstrap(() => const App());
+  await initHive();
+  await bootstrap(() => const App());
 }
