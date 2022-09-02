@@ -35,3 +35,8 @@ const kCredentials = {
   'client_x509_cert_url':
       'https://www.googleapis.com/robot/v1/metadata/x509/flash-user%40flash-359510.iam.gserviceaccount.com'
 };
+
+// Hive
+const kStateKey = 'state';
+
+const kProfileBox = 'profile';

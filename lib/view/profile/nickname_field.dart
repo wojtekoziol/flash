@@ -5,43 +5,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class NicknameField extends HookWidget {
-  const NicknameField({
-    super.key,
-    required this.focusNode,
-  });
-
-  final FocusNode focusNode;
+  const NicknameField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = useTextEditingController();
+    final cubit = context.read<ProfileCubit>();
+    final focusNode = context.read<FocusNode>();
 
-    return BlocListener<ProfileCubit, ProfileState>(
-      listener: (context, state) {
-        state.whenOrNull(
-          created: (nickname, _) => controller.text = nickname,
-        );
+    final controller = useTextEditingController(
+      text: cubit.state.whenOrNull(created: (nickname, _) => nickname),
+    );
+
+    return TextFormField(
+      focusNode: focusNode,
+      controller: controller,
+      onChanged: (text) {
+        cubit.update(nickname: text);
       },
-      child: TextFormField(
-        focusNode: focusNode,
-        controller: controller,
-        onEditingComplete: () {
-          context.read<ProfileCubit>().update(nickname: controller.text);
-        },
-        decoration: InputDecoration(
-          fillColor: Theme.of(context).scaffoldBackgroundColor,
-          filled: true,
-          border: UnderlineInputBorder(
-            borderRadius: BorderRadius.circular(kPaddingL),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderRadius: BorderRadius.circular(kPaddingL),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: kPaddingL,
-          ),
+      decoration: InputDecoration(
+        fillColor: Theme.of(context).scaffoldBackgroundColor,
+        filled: true,
+        border: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(kPaddingL),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(kPaddingL),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: kPaddingL,
         ),
       ),
     );
