@@ -13,7 +13,7 @@ class NicknameField extends HookWidget {
     final focusNode = context.read<FocusNode>();
 
     final controller = useTextEditingController(
-      text: cubit.state.whenOrNull(created: (nickname, _) => nickname),
+      text: cubit.state.whenOrNull(created: (nickname, _, __) => nickname),
     );
 
     return TextFormField(

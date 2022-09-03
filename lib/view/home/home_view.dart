@@ -1,5 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/config/get_it.dart';
+import 'package:flash/data/bloc/profile/profile_cubit.dart';
 import 'package:flash/data/models/deck.dart';
 import 'package:flash/data/repository/gdrive_repo.dart';
 import 'package:flash/view/home/widgets/app_logo.dart';
@@ -7,6 +8,7 @@ import 'package:flash/view/home/widgets/deck_card.dart';
 import 'package:flash/view/home/widgets/home_widget.dart';
 import 'package:flash/view/home/widgets/profile_picture.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class HomeView extends HookWidget {
@@ -32,19 +34,37 @@ class HomeView extends HookWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: HomeWidget(
-                          color: theme.colorScheme.secondary,
-                          value: 34,
-                          title: 'Studied cards',
+                        child: BlocBuilder<ProfileCubit, ProfileState>(
+                          builder: (context, state) {
+                            final value = state.when(
+                              notCreated: () => 0,
+                              created: (_, __, studiedCards) => studiedCards,
+                            );
+
+                            return HomeWidget(
+                              color: theme.colorScheme.secondary,
+                              value: value,
+                              title: 'Studied cards',
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: kPaddingM),
                       Expanded(
-                        child: HomeWidget(
-                          color:
-                              theme.floatingActionButtonTheme.backgroundColor!,
-                          value: 18,
-                          title: 'Decks created',
+                        child: BlocBuilder<ProfileCubit, ProfileState>(
+                          builder: (context, state) {
+                            final value = state.when(
+                              notCreated: () => 0,
+                              created: (_, decks, __) => decks.length,
+                            );
+
+                            return HomeWidget(
+                              color: theme
+                                  .floatingActionButtonTheme.backgroundColor!,
+                              value: value,
+                              title: 'Decks created',
+                            );
+                          },
                         ),
                       ),
                     ],
