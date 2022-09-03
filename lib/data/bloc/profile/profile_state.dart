@@ -6,6 +6,7 @@ class ProfileState with _$ProfileState {
   const factory ProfileState.created({
     required String nickname,
     @Default([]) List<Deck> decks,
+    @Default(0) int studiedCards,
   }) = _Created;
 
   factory ProfileState.fromJson(Map<String, Object?> json) =>
