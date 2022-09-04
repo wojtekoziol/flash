@@ -20,6 +20,7 @@ void main() {
           answer: 'Answer 2',
         ),
       ],
+      defaultFlashcardsLength: 2,
     );
     group('initial state is correct', () {
       test('when there are no flashcards in the deck', () {
@@ -28,6 +29,7 @@ void main() {
           flashcards: [],
           title: '',
           user: '',
+          defaultFlashcardsLength: 0,
         );
         final cubit = FlashcardsCubit(emptyDeck);
 
@@ -53,7 +55,7 @@ void main() {
         'is [FlashcardsState.question] and flip() is called.',
         build: () => FlashcardsCubit(deck),
         act: (cubit) => cubit.flip(),
-        expect: () => const [FlashcardsState.answer(deck: deck)],
+        expect: () => [const FlashcardsState.answer(deck: deck)],
       );
 
       blocTest<FlashcardsCubit, FlashcardsState>(
@@ -134,8 +136,8 @@ void main() {
         build: () => FlashcardsCubit(deck),
         seed: () => const FlashcardsState.answer(deck: deck),
         act: (cubit) => cubit.dontKnow(),
-        expect: () => const [
-          FlashcardsState.question(deck: deck, index: 1),
+        expect: () => [
+          const FlashcardsState.question(deck: deck, index: 1),
         ],
       );
 
