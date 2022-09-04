@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flash/data/models/deck.dart';
 import 'package:flash/data/models/flashcard.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -6,63 +7,69 @@ part 'flashcards_state.dart';
 part 'flashcards_cubit.freezed.dart';
 
 class FlashcardsCubit extends Cubit<FlashcardsState> {
-  FlashcardsCubit(List<Flashcard> flashcards)
+  FlashcardsCubit(Deck deck)
       : super(
-          flashcards.isNotEmpty
-              ? FlashcardsState.question(
-                  flashcards: List.from(flashcards)..shuffle(),
-                )
-              : const FlashcardsState.finished(),
+          deck.flashcards.isEmpty
+              ? FlashcardsState.finished(deck: deck)
+              : FlashcardsState.question(deck: deck),
         );
 
   void flip() {
-    state.whenOrNull(
-      question: (flashcards, index) {
-        emit(FlashcardsState.answer(flashcards: flashcards, index: index));
-      },
-    );
+    final question = state.mapOrNull(question: (value) => value);
+    if (question == null) return;
+    emit(FlashcardsState.answer(
+      deck: question.deck,
+      index: question.index,
+    ));
   }
 
   void know() {
-    state.whenOrNull(
-      answer: (flashcards, index) {
-        final cards = List<Flashcard>.from(flashcards)..removeAt(index);
+    final answer = state.mapOrNull(answer: (value) => value);
+    if (answer == null) return;
 
-        if (cards.isEmpty) {
-          emit(const FlashcardsState.finished());
-          return;
-        }
+    final cards = List<Flashcard>.from(answer.deck.flashcards)
+      ..removeAt(answer.index);
 
-        if (index + 1 >= cards.length) {
-          emit(FlashcardsState.question(
-            flashcards: cards..shuffle(),
-          ));
-          return;
-        }
+    if (cards.isEmpty) {
+      emit(FlashcardsState.finished(
+        deck: answer.deck.copyWith(flashcards: cards),
+      ));
+      return;
+    }
 
-        emit(FlashcardsState.question(
-          flashcards: cards,
-          index: index,
-        ));
-      },
-    );
+    if (answer.index + 1 >= cards.length) {
+      emit(FlashcardsState.question(
+        deck: answer.deck.copyWith(
+          flashcards: cards..shuffle(),
+        ),
+      ));
+      return;
+    }
+
+    emit(FlashcardsState.question(
+      deck: answer.deck.copyWith(
+        flashcards: cards..shuffle(),
+      ),
+      index: answer.index,
+    ));
   }
 
   void dontKnow() {
-    state.whenOrNull(
-      answer: (flashcards, index) {
-        if (index + 1 >= flashcards.length) {
-          emit(FlashcardsState.question(
-            flashcards: List.from(flashcards)..shuffle(),
-          ));
-          return;
-        }
+    final answer = state.mapOrNull(answer: (value) => value);
+    if (answer == null) return;
 
-        emit(FlashcardsState.question(
-          flashcards: flashcards,
-          index: ++index,
-        ));
-      },
-    );
+    if (answer.index + 1 >= answer.deck.flashcards.length) {
+      emit(FlashcardsState.question(
+        deck: answer.deck.copyWith(
+          flashcards: List.from(answer.deck.flashcards)..shuffle(),
+        ),
+      ));
+      return;
+    }
+
+    emit(FlashcardsState.question(
+      deck: answer.deck,
+      index: answer.index + 1,
+    ));
   }
 }

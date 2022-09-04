@@ -46,9 +46,13 @@ class _FlashcardsView extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'Earth Science',
-                      style: theme.textTheme.headline3,
+                    BlocBuilder<FlashcardsCubit, FlashcardsState>(
+                      builder: (context, state) {
+                        return Text(
+                          state.deck.category,
+                          style: theme.textTheme.headline3,
+                        );
+                      },
                     ),
                     const SizedBox(height: kPaddingXL),
                     const Padding(
