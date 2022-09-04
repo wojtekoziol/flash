@@ -86,6 +86,7 @@ class GDriveRepo {
       title: title,
       user: user,
       flashcards: flashcards,
+      defaultFlashcardsLength: flashcards.length,
     );
     return deck;
   }
