@@ -46,7 +46,7 @@ class DeckCard extends StatelessWidget {
           closedColor: Colors.transparent,
           openColor: Colors.transparent,
           openBuilder: (_, __) => BlocProvider(
-            create: (_) => FlashcardsCubit(deck.flashcards),
+            create: (_) => FlashcardsCubit(deck),
             child: const FlashcardsView(),
           ),
           closedBuilder: (_, open) => GestureDetector(
