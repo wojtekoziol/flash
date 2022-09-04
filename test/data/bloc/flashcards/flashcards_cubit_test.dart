@@ -1,34 +1,48 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flash/data/bloc/flashcards/flashcards_cubit.dart';
+import 'package:flash/data/models/deck.dart';
 import 'package:flash/data/models/flashcard.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('FlashcardsCubit', () {
-    const flashcards = [
-      Flashcard(
-        question: 'Question 1',
-        answer: 'Answer 1',
-      ),
-      Flashcard(
-        question: 'Question 2',
-        answer: 'Answer 2',
-      ),
-    ];
-
+    const deck = Deck(
+      category: 'My Category',
+      title: 'My Title',
+      user: 'My User',
+      flashcards: [
+        Flashcard(
+          question: 'Question 1',
+          answer: 'Answer 1',
+        ),
+        Flashcard(
+          question: 'Question 2',
+          answer: 'Answer 2',
+        ),
+      ],
+    );
     group('initial state is correct', () {
-      test('when deck is empty', () {
-        final cubit = FlashcardsCubit([]);
-
-        expect(cubit.state, equals(const FlashcardsState.finished()));
-      });
-
-      test('when deck is not empty', () {
-        final cubit = FlashcardsCubit(flashcards);
+      test('when there are no flashcards in the deck', () {
+        const emptyDeck = Deck(
+          category: '',
+          flashcards: [],
+          title: '',
+          user: '',
+        );
+        final cubit = FlashcardsCubit(emptyDeck);
 
         expect(
           cubit.state,
-          equals(const FlashcardsState.question(flashcards: flashcards)),
+          equals(const FlashcardsState.finished(deck: emptyDeck)),
+        );
+      });
+
+      test('when there are flashcards in the deck', () {
+        final cubit = FlashcardsCubit(deck);
+
+        expect(
+          cubit.state,
+          equals(const FlashcardsState.question(deck: deck)),
         );
       });
     });
@@ -37,16 +51,16 @@ void main() {
       blocTest<FlashcardsCubit, FlashcardsState>(
         'emits [FlashcardsState.answer] when current state '
         'is [FlashcardsState.question] and flip() is called.',
-        build: () => FlashcardsCubit(flashcards),
+        build: () => FlashcardsCubit(deck),
         act: (cubit) => cubit.flip(),
-        expect: () => const [FlashcardsState.answer(flashcards: flashcards)],
+        expect: () => const [FlashcardsState.answer(deck: deck)],
       );
 
       blocTest<FlashcardsCubit, FlashcardsState>(
         'does not emit anything when current state '
         'is [FlashcardsState.answer] and flip() is called.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: () => const FlashcardsState.answer(flashcards: flashcards),
+        build: () => FlashcardsCubit(deck),
+        seed: () => const FlashcardsState.answer(deck: deck),
         act: (cubit) => cubit.flip(),
         expect: List.empty,
       );
@@ -54,8 +68,8 @@ void main() {
       blocTest<FlashcardsCubit, FlashcardsState>(
         'does not emit anything when current state '
         'is [FlashcardsState.finished] and flip() is called.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: FlashcardsState.finished,
+        build: () => FlashcardsCubit(deck),
+        seed: () => const FlashcardsState.finished(deck: deck),
         act: (cubit) => cubit.flip(),
         expect: List.empty,
       );
@@ -65,21 +79,31 @@ void main() {
       blocTest<FlashcardsCubit, FlashcardsState>(
         'emits [FlashcardsState.finished] when '
         'there are no flashcards left.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: () => FlashcardsState.answer(flashcards: [flashcards.first]),
+        build: () => FlashcardsCubit(deck),
+        seed: () => FlashcardsState.answer(
+          deck: deck.copyWith(
+            flashcards: [deck.flashcards.first],
+          ),
+        ),
         act: (cubit) => cubit.know(),
-        expect: () => const [FlashcardsState.finished()],
+        expect: () => [
+          FlashcardsState.finished(
+            deck: deck.copyWith(flashcards: []),
+          ),
+        ],
       );
 
       blocTest<FlashcardsCubit, FlashcardsState>(
         'emits [FlashcardsState.question] when '
         'there are more flashcards in the deck.',
-        build: () => FlashcardsCubit(flashcards),
-        seed: () => const FlashcardsState.answer(flashcards: flashcards),
+        build: () => FlashcardsCubit(deck),
+        seed: () => const FlashcardsState.answer(deck: deck),
         act: (cubit) => cubit.know(),
         expect: () => [
           FlashcardsState.question(
-            flashcards: List.from(flashcards)..removeAt(0),
+            deck: deck.copyWith(
+              flashcards: List.from(deck.flashcards)..removeAt(0),
+            ),
           ),
         ],
       );
@@ -87,14 +111,18 @@ void main() {
       blocTest<FlashcardsCubit, FlashcardsState>(
         'emits [FlashcardsState.question] with shuffled flashcards when '
         "there are flashcards in the deck that user marked as don't know.",
-        build: () => FlashcardsCubit(flashcards),
+        build: () => FlashcardsCubit(deck),
         seed: () => const FlashcardsState.answer(
-          flashcards: flashcards,
+          deck: deck,
           index: 1,
         ),
         act: (cubit) => cubit.know(),
         expect: () => [
-          FlashcardsState.question(flashcards: [flashcards.first]),
+          FlashcardsState.question(
+            deck: deck.copyWith(
+              flashcards: [deck.flashcards.first],
+            ),
+          ),
         ],
       );
     });
@@ -103,11 +131,11 @@ void main() {
       blocTest<FlashcardsCubit, FlashcardsState>(
         'emits [FlashcardsState.question] with next flashcard when '
         "marked as don't know.",
-        build: () => FlashcardsCubit(flashcards),
-        seed: () => const FlashcardsState.answer(flashcards: flashcards),
+        build: () => FlashcardsCubit(deck),
+        seed: () => const FlashcardsState.answer(deck: deck),
         act: (cubit) => cubit.dontKnow(),
         expect: () => const [
-          FlashcardsState.question(flashcards: flashcards, index: 1),
+          FlashcardsState.question(deck: deck, index: 1),
         ],
       );
 
@@ -115,21 +143,21 @@ void main() {
         'emits [FlashcardsState.question] with shuffled flashcards '
         "marked as don't know.",
         () {
-          final cubit = FlashcardsCubit(flashcards)
+          final cubit = FlashcardsCubit(deck)
             ..emit(const FlashcardsState.answer(
-              flashcards: flashcards,
+              deck: deck,
               index: 1,
             ));
 
           cubit.dontKnow();
 
           final cards = cubit.state.whenOrNull(
-                question: (flashcards, _) => flashcards,
+                question: (deck, _) => deck.flashcards,
               ) ??
               [];
-          expect(flashcards.any(cards.contains), true);
-          expect(cards.any(flashcards.contains), true);
-          expect(cards.length, flashcards.length);
+          expect(deck.flashcards.any(cards.contains), true);
+          expect(cards.any(deck.flashcards.contains), true);
+          expect(cards.length, deck.flashcards.length);
         },
       );
     });

@@ -22,13 +22,13 @@ class BottomOptionsBar extends HookWidget {
 
     return BlocListener<FlashcardsCubit, FlashcardsState>(
       listener: (_, state) {
-        state.whenOrNull(
-          question: (_, __) {
+        state.mapOrNull(
+          question: (_) {
             answerAnimController.reverse().then(
                   (_) => questionAnimController.forward(),
                 );
           },
-          answer: (_, __) {
+          answer: (_) {
             questionAnimController.reverse().then(
                   (_) => answerAnimController.forward(),
                 );
