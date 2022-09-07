@@ -1,5 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/bloc/flashcards/flashcards_cubit.dart';
+import 'package:flash/data/bloc/profile/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -94,7 +95,16 @@ class FinishedView extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: GestureDetector(
-                  onTap: Navigator.of(context).pop,
+                  onTap: () {
+                    final flashcardsCubit = context.read<FlashcardsCubit>();
+                    final studiedCards =
+                        flashcardsCubit.state.deck.defaultFlashcardsLength;
+
+                    final profileCubit = context.read<ProfileCubit>();
+                    profileCubit.saveStudiedCards(studiedCards);
+
+                    Navigator.of(context).pop();
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: theme.floatingActionButtonTheme.backgroundColor,

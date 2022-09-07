@@ -1,6 +1,5 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/bloc/flashcards/flashcards_cubit.dart';
-import 'package:flash/data/bloc/profile/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -63,10 +62,7 @@ class BottomOptionsBar extends HookWidget {
               ScaleTransition(
                 scale: bounceTween.animate(answerAnimController),
                 child: _Button(
-                  onTap: () {
-                    profileCubit.know();
-                    context.read<ProfileCubit>().studiedCard();
-                  },
+                  onTap: profileCubit.know,
                   color: theme.floatingActionButtonTheme.backgroundColor,
                   child: const Icon(UniconsLine.check),
                 ),

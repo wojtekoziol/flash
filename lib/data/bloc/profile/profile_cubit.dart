@@ -31,7 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
     );
     emit(nextState);
-    _clearBox();
+    await _clearBox();
   }
 
   @override
@@ -52,11 +52,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  void studiedCard() {
-    final s = state.mapOrNull(created: (value) => value);
+  Future<void> saveStudiedCards(int n) async {
+    final s = state.mapOrNull(created: (s) => s);
     if (s == null) return;
-    final studiedCards = s.studiedCards + 1;
-    box.put(_getDateKey(), '$studiedCards');
+    final key = _getDateKey();
+    final prevStudiedCards = int.parse(box.get(key) ?? '0');
+    final studiedCards = prevStudiedCards + n;
+    await box.put(key, '$studiedCards');
     emit(s.copyWith(studiedCards: studiedCards));
   }
 
@@ -66,16 +68,16 @@ class ProfileCubit extends Cubit<ProfileState> {
     return key;
   }
 
-  void _clearBox() {
+  Future<void> _clearBox() async {
     final stateJsonString = box.get(kStateKey);
     final dateKey = _getDateKey();
     final studiedCards = box.get(dateKey);
-    box.clear();
+    await box.clear();
     if (stateJsonString != null) {
-      box.put(kStateKey, stateJsonString);
+      await box.put(kStateKey, stateJsonString);
     }
     if (studiedCards != null) {
-      box.put(dateKey, studiedCards);
+      await box.put(dateKey, studiedCards);
     }
   }
 }
