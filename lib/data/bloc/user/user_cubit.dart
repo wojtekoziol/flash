@@ -1,32 +1,29 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:flash/config/constants.dart';
-import 'package:flash/data/models/deck.dart';
+import 'package:flash/data/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
-part 'profile_state.dart';
-part 'profile_cubit.freezed.dart';
-part 'profile_cubit.g.dart';
+part 'user_state.dart';
+part 'user_cubit.freezed.dart';
+part 'user_cubit.g.dart';
 
-class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit() : super(const ProfileState.notCreated()) {
+class UserCubit extends Cubit<UserState> {
+  UserCubit() : super(const UserState.notCreated()) {
     _emitPrevState();
   }
 
-  final box = Hive.box<String>(kProfileBox);
+  final box = Hive.box<Object>(kProfileBox);
 
   Future<void> _emitPrevState() async {
-    final jsonString = box.get(kStateKey);
-    if (jsonString == null) return;
-    final prevState = ProfileState.fromJson(
-      json.decode(jsonString) as Map<String, dynamic>,
-    );
+    final prevState = box.get(kStateKey) as UserState?;
+    if (prevState == null) return;
     final nextState = prevState.map(
       notCreated: (value) => value,
       created: (value) {
-        final studiedCards = int.parse(box.get(_getDateKey()) ?? '0');
+        final studiedCards = box.get(_getDateKey()) as int? ?? 0;
         return value.copyWith(studiedCards: studiedCards);
       },
     );
@@ -35,20 +32,30 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   @override
-  void onChange(Change<ProfileState> change) {
+  void onChange(Change<UserState> change) {
     super.onChange(change);
-    final jsonString = json.encode(change.nextState.toJson());
-    box.put(kStateKey, jsonString);
+    box.put(kStateKey, change.nextState);
   }
 
   void create({required String nickname}) {
-    emit(ProfileState.created(nickname: nickname));
+    emit(UserState.created(user: User(nickname: nickname)));
   }
 
-  void update({required String nickname}) {
-    state.map(
-      notCreated: (_) => create(nickname: nickname),
-      created: (s) => emit(s.copyWith(nickname: nickname)),
+  void update({String? nickname, File? profilePictureFile}) {
+    state.when(
+      notCreated: () {
+        if (nickname == null) return;
+        create(nickname: nickname);
+      },
+      created: (user, studiedCards) {
+        emit(UserState.created(
+          user: User(
+            nickname: nickname ?? user.nickname,
+            profilePictureFile: profilePictureFile ?? user.profilePictureFile,
+          ),
+          studiedCards: studiedCards,
+        ));
+      },
     );
   }
 
@@ -56,9 +63,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     final s = state.mapOrNull(created: (s) => s);
     if (s == null) return;
     final key = _getDateKey();
-    final prevStudiedCards = int.parse(box.get(key) ?? '0');
+    final prevStudiedCards = box.get(key) as int? ?? 0;
     final studiedCards = prevStudiedCards + n;
-    await box.put(key, '$studiedCards');
+    await box.put(key, studiedCards);
     emit(s.copyWith(studiedCards: studiedCards));
   }
 

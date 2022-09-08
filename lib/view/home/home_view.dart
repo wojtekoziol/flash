@@ -1,6 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/config/get_it.dart';
-import 'package:flash/data/bloc/profile/profile_cubit.dart';
+import 'package:flash/data/bloc/user/user_cubit.dart';
 import 'package:flash/data/models/deck.dart';
 import 'package:flash/data/repository/gdrive_repo.dart';
 import 'package:flash/view/home/widgets/app_logo.dart';
@@ -34,11 +34,11 @@ class HomeView extends HookWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: BlocBuilder<ProfileCubit, ProfileState>(
+                        child: BlocBuilder<UserCubit, UserState>(
                           builder: (context, state) {
                             final value = state.when(
                               notCreated: () => 0,
-                              created: (_, __, studiedCards) => studiedCards,
+                              created: (_, studiedCards) => studiedCards,
                             );
 
                             return HomeWidget(
@@ -51,11 +51,11 @@ class HomeView extends HookWidget {
                       ),
                       const SizedBox(width: kPaddingM),
                       Expanded(
-                        child: BlocBuilder<ProfileCubit, ProfileState>(
+                        child: BlocBuilder<UserCubit, UserState>(
                           builder: (context, state) {
                             final value = state.when(
                               notCreated: () => 0,
-                              created: (_, decks, __) => decks.length,
+                              created: (user, _) => user.decks.length,
                             );
 
                             return HomeWidget(
