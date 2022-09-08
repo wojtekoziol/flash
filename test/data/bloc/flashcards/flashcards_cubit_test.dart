@@ -14,10 +14,12 @@ void main() {
         Flashcard(
           question: 'Question 1',
           answer: 'Answer 1',
+          index: 1,
         ),
         Flashcard(
           question: 'Question 2',
           answer: 'Answer 2',
+          index: 2,
         ),
       ],
       defaultFlashcardsLength: 2,
