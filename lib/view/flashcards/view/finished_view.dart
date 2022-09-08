@@ -1,6 +1,6 @@
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/bloc/flashcards/flashcards_cubit.dart';
-import 'package:flash/data/bloc/profile/profile_cubit.dart';
+import 'package:flash/data/bloc/user/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -100,7 +100,7 @@ class FinishedView extends StatelessWidget {
                     final studiedCards =
                         flashcardsCubit.state.deck.defaultFlashcardsLength;
 
-                    final profileCubit = context.read<ProfileCubit>();
+                    final profileCubit = context.read<UserCubit>();
                     profileCubit.saveStudiedCards(studiedCards);
 
                     Navigator.of(context).pop();
