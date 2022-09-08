@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/models/deck.dart';
 import 'package:flash/data/models/flashcard.dart';
@@ -73,10 +74,11 @@ class GDriveRepo {
     rows.removeAt(0);
     final flashcards = rows
         .where((row) => row.length == 2)
-        .map(
-          (row) => Flashcard(
+        .mapIndexed(
+          (i, row) => Flashcard(
             question: row[0].toString().trim(),
             answer: row[1].toString().trim(),
+            index: ++i,
           ),
         )
         .toList();
