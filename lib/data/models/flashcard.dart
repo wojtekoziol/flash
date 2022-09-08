@@ -8,6 +8,7 @@ class Flashcard with _$Flashcard {
   const factory Flashcard({
     required String question,
     required String answer,
+    required int index,
   }) = _Flashcard;
 
   factory Flashcard.fromJson(Map<String, Object?> json) =>
