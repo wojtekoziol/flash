@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:flash/config/constants.dart';
+import 'package:flash/config/get_it.dart';
+import 'package:flash/data/bloc/user/user_cubit.dart';
 import 'package:flash/view/profile/widgets/nickname_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfileView extends HookWidget {
@@ -56,10 +62,41 @@ class _ProfileSection extends StatelessWidget {
             children: [
               const Expanded(child: NicknameField()),
               const SizedBox(width: kPaddingL),
-              CircleAvatar(
-                radius: kPaddingS * 3,
-                backgroundColor:
-                    theme.floatingActionButtonTheme.backgroundColor,
+              GestureDetector(
+                onTap: () async {
+                  final picker = getIt<ImagePicker>();
+                  final file = await picker.pickImage(
+                    source: ImageSource.gallery,
+                    imageQuality: 20,
+                  );
+                  if (file == null) return;
+                  final cubit = context.read<UserCubit>();
+                  cubit.update(profilePictureFile: File(file.path));
+                },
+                child: BlocBuilder<UserCubit, UserState>(
+                  builder: (context, state) {
+                    final file = state.whenOrNull(
+                      created: (user, _) => user.profilePictureFile,
+                    );
+                    if (file == null) {
+                      return CircleAvatar(
+                        radius: kPaddingS * 3,
+                        backgroundColor:
+                            theme.floatingActionButtonTheme.backgroundColor,
+                        child: Text('+', style: theme.textTheme.bodyText2),
+                      );
+                    }
+
+                    return ClipOval(
+                      child: Image.file(
+                        file,
+                        width: kPaddingXL,
+                        height: kPaddingXL,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

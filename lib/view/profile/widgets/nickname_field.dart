@@ -1,5 +1,5 @@
 import 'package:flash/config/constants.dart';
-import 'package:flash/data/bloc/profile/profile_cubit.dart';
+import 'package:flash/data/bloc/user/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,11 +9,11 @@ class NicknameField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ProfileCubit>();
+    final cubit = context.read<UserCubit>();
     final focusNode = context.read<FocusNode>();
 
     final controller = useTextEditingController(
-      text: cubit.state.whenOrNull(created: (nickname, _, __) => nickname),
+      text: cubit.state.whenOrNull(created: (user, _) => user.nickname),
     );
 
     return TextFormField(
