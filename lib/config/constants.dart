@@ -14,11 +14,13 @@ const kGrey = Color.fromARGB(255, 235, 235, 235);
 const kLightBlue = Color(0xffc3d2ff);
 
 // Animations
+const kClickAnimDuration = Duration(milliseconds: 150);
 const kShortAnimDuration = Duration(milliseconds: 300);
 const kDefaultAnimDuration = Duration(milliseconds: 500);
 const kLongAnimDuration = Duration(milliseconds: 750);
 
 const kDefaultAnimCurve = Curves.ease;
+const kClickAnimCurve = Curves.fastOutSlowIn;
 
 // Auth
 const kCredentials = {

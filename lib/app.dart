@@ -2,6 +2,7 @@ import 'package:flash/config/constants.dart';
 import 'package:flash/config/theme.dart';
 import 'package:flash/data/bloc/user/user_cubit.dart';
 import 'package:flash/view/navigation/navigation_view.dart';
+import 'package:flash/view/profile/new_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -17,7 +18,14 @@ class App extends StatelessWidget {
         title: 'Flash',
         debugShowCheckedModeBanner: false,
         theme: kLightTheme,
-        home: const NavigationView(),
+        home: BlocBuilder<UserCubit, UserState>(
+          builder: (context, state) {
+            return state.map(
+              notCreated: (_) => const NewProfileView(),
+              created: (_) => const NavigationView(),
+            );
+          },
+        ),
       ),
     );
   }
