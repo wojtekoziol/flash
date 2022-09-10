@@ -47,3 +47,5 @@ flutter:
           weight: 500
         - asset: assets/fonts/Poppins/Poppins-Bold.ttf
           weight: 700
+  assets:
+    - assets/images/new_profile_view.png
