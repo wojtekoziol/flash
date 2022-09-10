@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:clock/clock.dart';
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,11 +12,11 @@ part 'user_cubit.freezed.dart';
 part 'user_cubit.g.dart';
 
 class UserCubit extends Cubit<UserState> {
-  UserCubit() : super(const UserState.notCreated()) {
+  UserCubit(this.box) : super(const UserState.notCreated()) {
     _emitPrevState();
   }
 
-  final box = Hive.box<Object>(kProfileBox);
+  final Box<Object> box;
 
   Future<void> _emitPrevState() async {
     final prevState = box.get(kStateKey) as UserState?;
@@ -28,7 +29,6 @@ class UserCubit extends Cubit<UserState> {
       },
     );
     emit(nextState);
-    await _clearBox();
   }
 
   @override
@@ -38,53 +38,36 @@ class UserCubit extends Cubit<UserState> {
   }
 
   void create({required String nickname}) {
+    final isCreated = state.mapOrNull(created: (_) => true) ?? false;
+    if (isCreated) return;
     emit(UserState.created(user: User(nickname: nickname)));
   }
 
   void update({String? nickname, File? profilePictureFile}) {
-    state.when(
-      notCreated: () {
-        if (nickname == null) return;
-        create(nickname: nickname);
-      },
-      created: (user, studiedCards) {
-        emit(UserState.created(
-          user: User(
-            nickname: nickname ?? user.nickname,
-            profilePictureFile: profilePictureFile ?? user.profilePictureFile,
-          ),
-          studiedCards: studiedCards,
-        ));
-      },
+    final created = state.mapOrNull(created: (s) => s);
+    if (created == null) return;
+    final newState = created.copyWith(
+      user: created.user.copyWith(
+        nickname: nickname ?? created.user.nickname,
+        profilePictureFile:
+            profilePictureFile ?? created.user.profilePictureFile,
+      ),
     );
+    emit(newState);
   }
 
   Future<void> saveStudiedCards(int n) async {
     final s = state.mapOrNull(created: (s) => s);
     if (s == null) return;
-    final key = _getDateKey();
-    final prevStudiedCards = box.get(key) as int? ?? 0;
-    final studiedCards = prevStudiedCards + n;
-    await box.put(key, studiedCards);
+    final studiedCards = s.studiedCards + n;
+    await box.clear();
+    await box.put(_getDateKey(), studiedCards);
     emit(s.copyWith(studiedCards: studiedCards));
   }
 
   String _getDateKey() {
-    final now = DateTime.now();
+    final now = clock.now();
     final key = '${now.day}-${now.month}-${now.year}';
     return key;
-  }
-
-  Future<void> _clearBox() async {
-    final stateJsonString = box.get(kStateKey);
-    final dateKey = _getDateKey();
-    final studiedCards = box.get(dateKey);
-    await box.clear();
-    if (stateJsonString != null) {
-      await box.put(kStateKey, stateJsonString);
-    }
-    if (studiedCards != null) {
-      await box.put(dateKey, studiedCards);
-    }
   }
 }
