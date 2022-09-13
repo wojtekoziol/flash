@@ -9,7 +9,7 @@ void main() {
     const deck = Deck(
       category: 'My Category',
       title: 'My Title',
-      user: 'My User',
+      nickname: 'My User',
       flashcards: [
         Flashcard(
           question: 'Question 1',
@@ -30,7 +30,7 @@ void main() {
           category: '',
           flashcards: [],
           title: '',
-          user: '',
+          nickname: '',
           defaultFlashcardsLength: 0,
         );
         final cubit = FlashcardsCubit(emptyDeck);

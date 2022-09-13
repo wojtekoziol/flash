@@ -26,7 +26,7 @@ void main() {
             Deck(
               category: 'My category',
               title: 'My Title',
-              user: 'My User',
+              nickname: 'My User',
               flashcards: [
                 Flashcard(
                   question: 'My Question',

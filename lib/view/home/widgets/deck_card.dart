@@ -81,7 +81,7 @@ class DeckCard extends StatelessWidget {
                             backgroundColor: Colors.amber,
                           ),
                           const SizedBox(width: kPaddingS),
-                          Text(deck.user, style: textTheme.bodyText1),
+                          Text(deck.nickname, style: textTheme.bodyText1),
                         ],
                       ),
                     ],
