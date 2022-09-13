@@ -11,8 +11,18 @@ class Deck with _$Deck {
   const factory Deck({
     @HiveField(0) required String category,
     @HiveField(1) required String title,
-    @HiveField(2) required String user,
+    @HiveField(2) required String nickname,
     @HiveField(3) required List<Flashcard> flashcards,
     @HiveField(4) required int defaultFlashcardsLength,
   }) = _Deck;
+
+  factory Deck.empty() {
+    return const Deck(
+      category: '',
+      title: '',
+      nickname: '',
+      flashcards: [],
+      defaultFlashcardsLength: 0,
+    );
+  }
 }

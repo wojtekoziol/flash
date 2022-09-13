@@ -69,7 +69,7 @@ class GDriveRepo {
     }
 
     final category = rows[0][0].toString().trim();
-    final user = rows[0][1].toString().trim();
+    final nickname = rows[0][1].toString().trim();
 
     rows.removeAt(0);
     final flashcards = rows
@@ -86,7 +86,7 @@ class GDriveRepo {
     final deck = Deck(
       category: category,
       title: title,
-      user: user,
+      nickname: nickname,
       flashcards: flashcards,
       defaultFlashcardsLength: flashcards.length,
     );

@@ -11,6 +11,14 @@ class Flashcard with _$Flashcard {
     required int index,
   }) = _Flashcard;
 
+  factory Flashcard.empty(int index) {
+    return Flashcard(
+      question: '',
+      answer: '',
+      index: index,
+    );
+  }
+
   factory Flashcard.fromJson(Map<String, Object?> json) =>
       _$FlashcardFromJson(json);
 }
