@@ -18,29 +18,39 @@ class NewDeckCubit extends Cubit<Deck> {
   }
 
   void addFlashcard() {
-    final flashcards = state.flashcards;
+    final flashcards = List<Flashcard>.from(state.flashcards);
     flashcards.add(Flashcard.empty(flashcards.length));
     emit(state.copyWith(
       flashcards: flashcards,
       defaultFlashcardsLength: flashcards.length,
     ));
+  }
 
-    void updateFlashcard(int index, {String? question, String? answer}) {
-      final flashcards = state.flashcards;
-      final flashcard = flashcards.elementAt(index);
-      flashcards.replaceRange(index, index + 1, [
-        Flashcard(
-          question: question ?? flashcard.question,
-          answer: answer ?? flashcard.answer,
-          index: index,
-        )
-      ]);
-      emit(state.copyWith(flashcards: flashcards));
-    }
+  void removeFlashcard(int index) {
+    final flashcards = List<Flashcard>.from(state.flashcards);
+    flashcards.removeAt(index);
+    emit(state.copyWith(
+      flashcards: flashcards,
+      defaultFlashcardsLength: flashcards.length,
+    ));
+  }
 
-    void saveDeck() {
-      // TODO(wojtekoziol): Implement
-      throw UnimplementedError();
-    }
+  void updateFlashcard(int index, {String? question, String? answer}) {
+    final flashcards = List<Flashcard>.from(state.flashcards);
+    final flashcard = flashcards.elementAt(index);
+    flashcards.removeAt(index);
+    flashcards.insert(
+      index,
+      Flashcard(
+        question: question ?? flashcard.question,
+        answer: answer ?? flashcard.answer,
+        index: index,
+      ),
+    );
+    emit(state.copyWith(flashcards: flashcards));
+  }
+
+  void saveDeck() {
+    throw UnimplementedError();
   }
 }
