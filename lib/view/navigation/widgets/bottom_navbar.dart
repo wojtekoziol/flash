@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/bloc/new_deck/new_deck_cubit.dart';
 import 'package:flash/view/navigation/widgets/bottom_navbar_item.dart';
+import 'package:flash/view/new_deck/new_deck_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unicons/unicons.dart';
@@ -71,8 +72,7 @@ class _FloatingActionButton extends StatelessWidget {
       ),
       openBuilder: (_, __) => BlocProvider(
         create: (_) => NewDeckCubit(),
-        // TODO(wojtekoziol): Implement
-        child: const SizedBox.shrink(),
+        child: const NewDeckView(),
       ),
     );
   }
