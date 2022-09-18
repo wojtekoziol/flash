@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flash/config/get_it.dart';
 import 'package:flash/data/models/deck.dart';
 import 'package:flash/data/models/flashcard.dart';
+import 'package:flash/data/repository/gdrive_repo.dart';
 
 class NewDeckCubit extends Cubit<Deck> {
   NewDeckCubit() : super(Deck.empty());
@@ -50,7 +52,7 @@ class NewDeckCubit extends Cubit<Deck> {
     emit(state.copyWith(flashcards: flashcards));
   }
 
-  void saveDeck() {
-    throw UnimplementedError();
+  Future<void> saveDeck() async {
+    await getIt<GDriveRepo>().saveDeck(state);
   }
 }

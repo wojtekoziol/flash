@@ -7,18 +7,16 @@ class SingleTextFieldCard extends HookWidget {
     super.key,
     required this.onEditingComplete,
     required this.title,
-    this.startText,
   });
 
   final void Function(String text) onEditingComplete;
   final String title;
-  final String? startText;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final controller = useTextEditingController(text: startText);
+    final controller = useTextEditingController();
     final focusNode = useFocusNode();
 
     useEffect(() {

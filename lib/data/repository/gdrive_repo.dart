@@ -3,8 +3,7 @@ import 'package:flash/config/constants.dart';
 import 'package:flash/data/models/deck.dart';
 import 'package:flash/data/models/flashcard.dart';
 import 'package:googleapis/drive/v2.dart';
-import 'package:googleapis/sheets/v4.dart';
-import 'package:googleapis_auth/auth_io.dart';
+import 'package:gsheets/gsheets.dart';
 
 class GDriveRepo {
   GDriveRepo() {
@@ -13,74 +12,65 @@ class GDriveRepo {
 
   late Future<void> _init;
   late DriveApi _driveApi;
-  late SheetsApi _sheetsApi;
+  late GSheets _gSheets;
 
   Future<void> _initGDriveRepo() async {
-    final accountCredentials = ServiceAccountCredentials.fromJson(kCredentials);
-    final scopes = [
-      SheetsApi.spreadsheetsReadonlyScope,
-      SheetsApi.driveReadonlyScope,
-    ];
-    final client = await clientViaServiceAccount(accountCredentials, scopes);
-    _driveApi = DriveApi(client);
-    _sheetsApi = SheetsApi(client);
+    _gSheets = GSheets(kCredentials);
+    _driveApi = DriveApi(await _gSheets.client);
   }
 
   Future<List<Deck>> getDecks() async {
     await _init;
 
     final filesAndFolders = await _getFilesAndFolders();
-    if (filesAndFolders == null) {
-      throw UnsupportedError('No files nor folders.');
-    }
+    if (filesAndFolders == null) return List.empty();
 
     final sheets = filesAndFolders
         .where((e) => e.mimeType?.contains('spreadsheet') ?? false)
         .toList();
 
-    final decks = Future.wait(
-      sheets.where((sheet) => sheet.id != null).map((sheet) {
-        final deck = _getDeck(sheet.id!);
-        return deck;
-      }),
-    );
+    final decks = <Deck>[];
+    for (final sheet in sheets.where((sheet) => sheet.id != null)) {
+      final deck = await _getDeck(sheet.id!);
+      if (deck == null) continue;
+      decks.add(deck);
+    }
+
     return decks;
   }
 
   Future<List<File>?> _getFilesAndFolders() async {
     await _init;
+
     final result = await _driveApi.files.list();
     final files = result.items;
     if (files == null) return null;
     return files;
   }
 
-  Future<Deck> _getDeck(String sheetID) async {
+  Future<Deck?> _getDeck(String sheetID) async {
     await _init;
 
-    final sheet = await _sheetsApi.spreadsheets.get(sheetID);
-    final title = (sheet.properties?.title ?? '').trim();
+    final ss = await _gSheets.spreadsheet(sheetID);
+    if (ss.sheets.isEmpty) return null;
 
-    final data = await _sheetsApi.spreadsheets.values.get(sheetID, 'A1:B1000');
-    final rows = data.values;
+    final sheet = ss.sheets.first;
+    final rows = await sheet.values.allRows();
 
-    if (rows == null || rows.length < 2 || rows[0].length != 2) {
-      throw UnsupportedError('Wrong data format');
-    }
+    if (rows.length < 2 || rows[0].length != 2) return null;
 
-    final category = rows[0][0].toString().trim();
-    final nickname = rows[0][1].toString().trim();
-
+    final title = (ss.data.properties.title ?? '').trim();
+    final category = rows[0][0].trim();
+    final nickname = rows[0][1].trim();
     rows.removeAt(0);
+
     final flashcards = rows
         .where((row) => row.length == 2)
-        .mapIndexed(
-          (i, row) => Flashcard(
-            question: row[0].toString().trim(),
-            answer: row[1].toString().trim(),
-            index: ++i,
-          ),
-        )
+        .mapIndexed((index, row) => Flashcard(
+              index: index,
+              question: row[0].trim(),
+              answer: row[1].trim(),
+            ))
         .toList();
 
     final deck = Deck(
@@ -91,5 +81,24 @@ class GDriveRepo {
       defaultFlashcardsLength: flashcards.length,
     );
     return deck;
+  }
+
+  Future<void> saveDeck(Deck deck) async {
+    await _init;
+
+    final ss = await _gSheets.createSpreadsheet(deck.title.trim());
+    final sheet = await ss.addWorksheet('deck');
+
+    await sheet.values.insertRow(1, [
+      deck.category.trim(),
+      deck.nickname.trim(),
+    ]);
+
+    deck.flashcards.forEachIndexed((index, flashcard) async {
+      await sheet.values.insertRow(index + 2, [
+        flashcard.question.trim(),
+        flashcard.answer.trim(),
+      ]);
+    });
   }
 }

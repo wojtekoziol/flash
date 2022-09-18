@@ -46,21 +46,18 @@ class NewDeckView extends StatelessWidget {
                               onEditingComplete: (text) =>
                                   cubit.update(nickname: text),
                               title: 'Nickname',
-                              startText: state.nickname,
                             ),
                             const SizedBox(height: kPaddingM),
                             SingleTextFieldCard(
                               onEditingComplete: (text) =>
                                   cubit.update(category: text),
                               title: 'Category',
-                              startText: state.category,
                             ),
                             const SizedBox(height: kPaddingM),
                             SingleTextFieldCard(
                               onEditingComplete: (text) =>
                                   cubit.update(title: text),
                               title: 'Title',
-                              startText: state.title,
                             ),
                             const SizedBox(height: kPaddingL),
                             ...state.flashcards.mapIndexed(
@@ -111,7 +108,10 @@ class NewDeckView extends StatelessWidget {
                       ),
                       const SizedBox(width: kPaddingM),
                       LongButton(
-                        onTap: cubit.saveDeck,
+                        onTap: () async {
+                          await cubit.saveDeck();
+                          Navigator.of(context).pop();
+                        },
                         color: theme.floatingActionButtonTheme.backgroundColor,
                         child: const Icon(Icons.check),
                       ),
