@@ -3,6 +3,7 @@ import 'package:flash/view/navigation/widgets/bottom_navbar.dart';
 import 'package:flash/view/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:provider/provider.dart';
 
 class NavigationView extends HookWidget {
   const NavigationView({super.key});
@@ -19,14 +20,17 @@ class NavigationView extends HookWidget {
         children: [
           ValueListenableBuilder<int>(
             valueListenable: indexNotifier,
-            builder: (context, index, child) {
+            builder: (_, index, __) {
               return IndexedStack(
                 index: index,
                 children: _pages,
               );
             },
           ),
-          BottomNavbar(indexNotifier: indexNotifier),
+          ChangeNotifierProvider.value(
+            value: indexNotifier,
+            child: const BottomNavbar(),
+          ),
         ],
       ),
     );
