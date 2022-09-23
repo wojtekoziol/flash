@@ -8,12 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unicons/unicons.dart';
 
 class BottomNavbar extends StatelessWidget {
-  const BottomNavbar({
-    super.key,
-    required this.indexNotifier,
-  });
-
-  final ValueNotifier<int> indexNotifier;
+  const BottomNavbar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +16,12 @@ class BottomNavbar extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: kPaddingM),
         height: 90,
-        child: Scaffold(
+        child: const Scaffold(
           backgroundColor: Colors.transparent,
-          floatingActionButton: const _FloatingActionButton(),
+          floatingActionButton: _FloatingActionButton(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: _BottomAppBar(indexNotifier: indexNotifier),
+          bottomNavigationBar: _BottomAppBar(),
         ),
       ),
     );
@@ -79,12 +74,12 @@ class _FloatingActionButton extends StatelessWidget {
 }
 
 class _BottomAppBar extends StatelessWidget {
-  const _BottomAppBar({required this.indexNotifier});
-
-  final ValueNotifier<int> indexNotifier;
+  const _BottomAppBar();
 
   @override
   Widget build(BuildContext context) {
+    final indexNotifier = context.read<ValueNotifier<int>>();
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(kPaddingXL),
       child: BottomAppBar(
@@ -97,7 +92,7 @@ class _BottomAppBar extends StatelessWidget {
           ),
           child: ValueListenableBuilder<int>(
             valueListenable: indexNotifier,
-            builder: (context, index, child) => Row(
+            builder: (_, index, __) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BottomNavbarItem(
