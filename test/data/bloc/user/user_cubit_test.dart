@@ -49,7 +49,7 @@ void main() {
         expect(cubit.state, equals(const UserState.notCreated()));
       });
 
-      test('when there is a previous state', () {
+      test('when there is a previous state and user is created', () {
         when(box.get(kStateKey)).thenReturn(exampleState);
         final now = DateTime.now();
         final key = '${now.day}-${now.month}-${now.year}';
@@ -64,6 +64,17 @@ void main() {
               created: (state) => state.copyWith(studiedCards: 3),
             ),
           ),
+        );
+      });
+
+      test('when there is a previous state and user is not created', () {
+        when(box.get(kStateKey)).thenReturn(const UserState.notCreated());
+
+        final cubit = UserCubit(box);
+
+        expect(
+          cubit.state,
+          equals(const UserState.notCreated()),
         );
       });
     });

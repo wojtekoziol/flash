@@ -37,7 +37,7 @@ class FlashcardsCubit extends Cubit<FlashcardsState> {
       return;
     }
 
-    if (answer.index + 1 >= cards.length) {
+    if (answer.index + 1 > cards.length) {
       emit(FlashcardsState.question(
         deck: answer.deck.copyWith(
           flashcards: cards..shuffle(),

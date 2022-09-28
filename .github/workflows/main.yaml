@@ -1,4 +1,4 @@
-name: Flutter Package Workflow
+name: CI
 
 on: [pull_request, push]
 
@@ -26,12 +26,15 @@ jobs:
         run: flutter format --set-exit-if-changed lib test
 
       - name: 🕵️ Analyze
-        run: flutter analyze lib test
+        run: |
+          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter analyze lib test
 
       - name: 🧪 Run Tests
-        run: very_good test -j 4 '--optimization' --coverage --test-randomize-ordering-seed random
+        run: very_good test -j 4 --optimization --coverage --test-randomize-ordering-seed random
 
       - name: 📊 Check Code Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v1
         with:
           path: ./coverage/lcov.info
+          exclude: '**/*.g.dart **/*.freezed.dart'
