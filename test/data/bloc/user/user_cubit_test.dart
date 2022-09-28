@@ -55,7 +55,7 @@ void main() {
 
           test('when there is a previous state', () {
             when(box.get(kStateKey)).thenReturn(exampleState);
-            when(box.get('10-9-2022')).thenReturn(3);
+            when(box.get('10-09-2022')).thenReturn(3);
 
             final cubit = UserCubit(box);
 
