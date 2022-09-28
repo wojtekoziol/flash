@@ -8,7 +8,6 @@ environment:
 
 dependencies:
   animations: ^2.0.3
-  clock: ^1.1.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
