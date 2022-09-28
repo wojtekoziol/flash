@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'flashcard.freezed.dart';
-part 'flashcard.g.dart';
 
 @freezed
 class Flashcard with _$Flashcard {
@@ -18,7 +17,4 @@ class Flashcard with _$Flashcard {
       index: index,
     );
   }
-
-  factory Flashcard.fromJson(Map<String, Object?> json) =>
-      _$FlashcardFromJson(json);
 }
