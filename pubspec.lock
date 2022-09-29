@@ -144,6 +144,13 @@ packages:
   clock:
     dependency: transitive
     description:
+      name: checked_yaml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  clock:
+    dependency: "direct main"
+    description:
       name: clock
       url: "https://pub.dartlang.org"
     source: hosted
