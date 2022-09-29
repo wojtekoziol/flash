@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:clock/clock.dart';
 import 'package:flash/config/constants.dart';
 import 'package:flash/data/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -66,7 +65,7 @@ class UserCubit extends Cubit<UserState> {
   }
 
   String _getDateKey() {
-    final now = clock.now();
+    final now = DateTime.now();
     final key = '${now.day}-${now.month}-${now.year}';
     return key;
   }
